@@ -1,0 +1,50 @@
+[options]
+font = Input Mono 9.5
+scrollback_lines = 1000
+icon_name = terminal
+browser = firefox
+search_wrap = true
+allow_bold = true
+clickable_url = true
+geometry = 1300x750
+
+[colors]
+
+# special
+foreground      = #bce7ff
+foreground_bold = #bce7ff
+cursor          = #bce7ff
+background      = #1d2a36
+
+# black
+color0  = #282a2e
+color8  = #5f7698
+
+# red
+color1  = #a54242
+color9  = #7dc96e
+
+# green
+color2  = #8e94ed
+color10 = #40d5ee
+
+# yellow
+color3  = #c77bce
+color11 = #f0c674
+
+# blue
+color4  = #5f819d
+color12 = #f99059
+
+# magenta
+color5  = #85678f
+color13 = #c26dde
+
+# cyan
+color6  = #5e8d87
+color14 = #12eed1
+
+# white
+color7  = #707880
+color15 = #bce7ff
+

@@ -1,0 +1,384 @@
+"*******************************************************************************
+"################################ PYTHON VIMRC #################################
+"*******************************************************************************
+
+filetype plugin indent on
+
+syntax on
+
+"**************vim-plug package manager (faster than vundle)
+call plug#begin('~/.vim/plugged')
+
+" indent guidelines
+" Plug 'nathanaelkane/vim-indent-guides'
+
+" python folding
+Plug 'tmhedberg/SimpylFold'
+
+" better python syntaxing
+Plug 'vim-python/python-syntax'
+
+" autoindent for python
+" Plug 'vim-scripts/indentpython.vim'
+Plug 'Vimjas/vim-python-pep8-indent'
+
+" add PEP8 syntax checking
+Plug 'nvie/vim-flake8'
+
+" better buffer management
+Plug 'jeetsukumaran/vim-buffergator'
+
+" easy commenting
+Plug 'tpope/vim-commentary'
+
+" surround support in vim
+Plug 'tpope/vim-surround'
+
+" remembers the previous state of vim
+Plug 'tpope/vim-obsession'
+
+" auto-complete for neovim
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" deoplete-jedi is deoplete source for python
+Plug 'zchee/deoplete-jedi'
+
+" switch between header file and cpp file
+" Plug 'vim-scripts/a.vim'
+
+" vim check syntax on each save
+Plug 'scrooloose/syntastic'
+
+" neomake for compiling asynchronously
+Plug 'https://github.com/neomake/neomake'
+
+" file tree
+Plug 'scrooloose/nerdtree'
+
+" tabs for each file
+Plug 'jistr/vim-nerdtree-tabs'
+
+" search ability
+Plug 'kien/ctrlp.vim'
+
+" improvements to backslash-search
+Plug 'junegunn/vim-slash'
+
+" git integration
+Plug 'tpope/vim-fugitive'
+
+" git gutter"
+Plug 'airblade/vim-gitgutter'
+
+" airline status bar
+Plug 'vim-airline/vim-airline'
+
+" airline status bar themes
+Plug 'vim-airline/vim-airline-themes'
+
+" trailing whitespace
+Plug 'ntpeters/vim-better-whitespace'
+
+"***COLORSCHEMES***
+" NOTE: some colorschemes don't support 24-bit truecolor that well
+" colorscheme repo from vim.org
+"Plug 'rafi/awesome-vim-colorschemes'
+
+" colorscheme vim-one
+Plug 'rakr/vim-one'
+
+"colorscheme vim-solarized8
+Plug 'lifepillar/vim-solarized8'
+
+"colorscheme twofirewatch
+Plug 'rakr/vim-two-firewatch'
+
+"colorscheme oceanic-next
+Plug 'mhartington/oceanic-next'
+
+"colorscheme gruvbox
+Plug 'morhetz/gruvbox'
+
+"colorscheme vim-kalisi
+Plug 'freeo/vim-kalisi'
+
+"colorscheme spacevim
+Plug 'liuchengxu/space-vim-dark'
+Plug 'colepeters/spacemacs-theme.vim'
+
+"colorscheme molokai
+Plug 'crusoexia/vim-monokai'
+
+"colorscheme deepspace
+Plug 'tyrannicaltoucan/vim-deep-space'
+
+"colorscheme nova
+Plug 'trevordmiller/nova-vim'
+
+"colorscheme nova
+Plug 'arcticicestudio/nord-vim'
+
+"colorscheme onehalfdark
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
+
+"colorscheme iceberg
+Plug 'cocopon/iceberg.vim'
+
+"colorscheme tender
+Plug 'jacoborus/tender.vim'
+
+"colorscheme afterglow
+Plug 'danilo-augusto/vim-afterglow'
+
+"colorscheme calm sping night
+Plug 'rhysd/vim-color-spring-night'
+
+"colorscheme new railcasts
+Plug 'carakan/new-railscasts-theme'
+
+"colorscheme ayu theme
+Plug 'ayu-theme/ayu-vim'
+
+"colorscheme neodark theme
+Plug 'KeitaNakamura/neodark.vim'
+
+
+
+call plug#end()
+
+
+" ********* Settings ********
+"
+
+
+
+" set new leader key
+let mapleader=","
+
+" for having .vimrc file within the current project folder
+"set exrc
+
+" when vim sees these filetypes, the comment strings will be //
+autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s
+" disable auto commenting when going to a new line from a line with comments
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+
+" massively simplified take on https://github.com/chreekat/vim-paren-crosshairs
+func! s:matchparen_cursorcolumn_setup()
+  augroup matchparen_cursorcolumn
+    autocmd!
+    autocmd CursorMoved * if get(w:, "paren_hl_on", 0) | set cursorcolumn | else | set nocursorcolumn | endif
+    autocmd InsertEnter * set nocursorcolumn
+  augroup END
+endf
+if !&cursorcolumn
+  augroup matchparen_cursorcolumn_setup
+    autocmd!
+    " - Add the event _only_ if matchparen is enabled.
+    " - Event must be added _after_ matchparen loaded (so we can react to w:paren_hl_on).
+    autocmd CursorMoved * if exists("#matchparen#CursorMoved") | call <sid>matchparen_cursorcolumn_setup() | endif
+          \ | autocmd! matchparen_cursorcolumn_setup
+  augroup END
+endif
+
+" cursor in middle of screen when searching
+set scrolloff=5
+
+" line numbers
+set nu
+set relativenumber
+set showcmd
+set showmatch
+set showmode
+set ruler
+set formatoptions+=o
+set textwidth=79
+set modeline
+" set esckeys
+set linespace=0
+set nojoinspaces
+" clipboard to copy/paste
+set clipboard=unnamed
+
+" how to split vim
+set splitright
+
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" " PEP8 indentation - python (add separate settings for different languages)
+" au BufNewFile,BufRead *.py
+" 	\ set tabstop=4
+" 	\ set softtabstop=4
+" 	\ set shiftwidth=4
+" 	\ set textwidth=79
+" 	\ set expandtab
+" 	\ set autoindent
+" 	\ set fileformat=unix
+
+" line wrapping
+set formatoptions+=w
+set tw=80
+
+" indentation rules
+filetype indent on
+set tabstop=2
+set softtabstop=4
+set shiftwidth=2
+set expandtab
+set colorcolumn=80
+
+" c++ filetype detection
+augroup project
+	autocmd!
+	autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
+augroup END
+
+
+"******** Key Remaps *********
+
+" ctrlp remap for useful keystrokes
+" --- open file menu in pwd
+nnoremap <Leader>o :CtrlP pwd<CR>
+" --- open buffer menu
+" nnoremap <Leader>b :CtrlPBuffer<CR>
+" --- open most recently used files
+nnoremap <Leader>f :CtrlPMRUFiles<CR>
+
+
+"********* Plugin Settings *********
+set completeopt-=preview
+
+let g:SimpylFold_docstring_preview=1
+
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" deoplete settings
+let g:deoplete#enable_at_startup = 1
+
+" Neomake settings
+" ----- neomake linter settings
+" run neomake on every write
+autocmd! BufWritePost * Neomake
+let g:neomake_python_enabled_makers = ['pylint']
+
+"run NERDTreeTabs on console vim startup
+let g:nerdtree_tabs_open_on_console_startup=0
+
+" hide .pyc files
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
+
+"better python syntax highlighting.
+"original python file renamed to pythonOLD.vim
+"new file overwrote /usr/share/nvim/runtime/syntax/python.vim
+" Python syntax highlighting settings
+let g:python_version_2=1
+" let g:python_highlight_all=1
+let g:python_highlight_class_vars=1
+let g:python_highlight_builtins=1
+
+
+" VIM AIRLINE AND COLORSCHEMES
+" vim-airline
+" --- airline settings
+let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#enabled = 2
+" let g:airline#extensions#tabline#fnamemod = ':t'
+" let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_alt_sep = '|'
+" let g:airline#extensions#tabline#right_sep = ' '
+" let g:airline#extensions#tabline#right_alt_sep = '|'
+" let g:airline_left_sep = ' '
+" let g:airline_left_alt_sep = '|'
+" let g:airline_right_sep = ' '
+" let g:airline_right_alt_sep = '|'
+" " --- airline fonts/symbols
+let g:airline_powerline_fonts = 1
+" --- airline themes
+" let g:airline_theme='one'
+" let g:airline_theme='deep_space'
+"let g:airline_theme='twofirewatch'
+"let g:airline_theme='gruvbox'
+"let g:airline_theme='kalisi'
+" let g:airline_theme='onehalfdark'
+" let g:airline_theme = 'tender'
+" let g:airline_theme = 'spring_night'
+
+"italic text
+"let g:two_firewatch_italics=1
+" let g:oceanic_next_terminal_italic=1
+" let g:deepspace_italics = 1
+let g:nord_italic_comments = 1
+
+"bold text
+let g:oceanic_next_terminal_bold=1
+
+" vim-slash
+noremap <plug>(slash-after) zz
+
+
+"revert back to 256 colors
+" set t_Co=256
+
+ " may be deprecated
+" Use TrueColor mode in vim/neovim
+" if (has("nvim"))
+  " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" endif
+if (has("termguicolors"))
+	set termguicolors
+endif
+
+" vertical column showing 80 char limit
+highlight ColorColumn ctermbg=darkgray
+set background=dark
+" set background=light
+
+" ayu colorscheme options
+let ayucolor="mirage"
+" let ayucolor="light"
+
+" solarized8 colorscheme options
+let g:solarized_visibility="low"
+
+" neodark colorscheme options
+let g:neodark#background='brown' " black, gray or brown
+
+" colorscheme neodark
+colorscheme ayu
+" colorscheme new-railscasts
+" colorscheme onehalfdark
+" colorscheme spring-night
+" colorscheme tender
+" colorscheme afterglow
+" colorscheme nova
+" colorscheme nord
+" colorscheme deep-space
+" colorscheme kalisi
+"colorscheme gruvbox
+"colorscheme solarized8_dark
+" colorscheme solarized8_light_flat
+" colorscheme solarized8_light
+" colorscheme OceanicNext
+" colorscheme monokai
+"colorscheme two-firewatch
+" colorscheme one
+" colorscheme spacemacs-theme
+" colorscheme wombat256
+"colorscheme jelleybeans
+"colorscheme kruby
+"colorscheme jellybeans
+"colorscheme synic
+
+
+
+
+" for having .vimrc file within the current project folder
+"set secure
+
+
