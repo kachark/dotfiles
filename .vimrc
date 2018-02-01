@@ -9,9 +9,6 @@ call plug#begin('~/.vim/plugged')
 " rtags for vim
 Plug 'lyuts/vim-rtags'
 
-" ale linter
-Plug 'w0rp/ale'
-
 " fuzzy finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -27,22 +24,29 @@ Plug 'google/vim-glaive'
 
 " YouCompleteMe autocompletion
 " Plug 'Valloric/YouCompleteMe'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-let g:deoplete#enable_at_startup = 1
-Plug 'tweekmonster/deoplete-clang2'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" let g:deoplete#enable_at_startup = 1
+" Plug 'tweekmonster/deoplete-clang2'
 
-" " clang-based c/c++ syntax highlighter
-" Plug 'arakashic/chromatica.nvim'
+" nvim-completion-manager framework
+Plug 'roxma/nvim-completion-manager'
+" c++ completion
+Plug 'roxma/ncm-clang'
 
 " " another c/c++ syntax highlighter
-Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'bfrg/vim-cpp-modern'
 
 " " switch between header file and cpp file
 Plug 'vim-scripts/a.vim'
 
 " CRITICAL
 
-" vim indent display
+" " ale linter
+Plug 'w0rp/ale'
+" ale-lightline integration
+Plug 'maximbaz/lightline-ale'
+
+" " vim indent display
 Plug 'Yggdroot/indentLine'
 
 " " vim-sneak movement
@@ -78,7 +82,6 @@ Plug 'ntpeters/vim-better-whitespace'
 " Plug 'mswift42/vim-themes'
 " Plug 'rafi/awesome-vim-colorschemes'
 " Plug 'rakr/vim-one'
-" Plug 'lifepillar/vim-solarized8'
 " Plug 'rakr/vim-two-firewatch'
 " Plug 'mhartington/oceanic-next'
 " Plug 'morhetz/gruvbox'
@@ -95,6 +98,7 @@ Plug 'ntpeters/vim-better-whitespace'
 " Plug 'danilo-augusto/vim-afterglow'
 " Plug 'dracula/vim'
 " Plug 't1mxg0d/vim-lucario'
+Plug 'lifepillar/vim-solarized8'
 Plug 'junegunn/seoul256.vim'
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'NLKNguyen/papercolor-theme'
@@ -196,11 +200,13 @@ nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
 " --- search terminal, files, or buffers
-nnoremap <Leader>f :FZF<CR>
-nnoremap <Leader>p :Files<CR>
+nnoremap <Leader>p :FZF<CR>
+" nnoremap <Leader>p :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
 " --- line completion using fzf
 imap <c-x><c-l> <plug>(fzf-complete-line)
+" --- ag
+nnoremap <leader>f :Ag<Space>
 
 
 "********* Plugin Settings *********
@@ -220,29 +226,31 @@ augroup END
 
 set completeopt-=preview
 
-" " chromatic.nvim syntax highlighter settings
-" let g:chromatica#responsive_mode = 1
-" " " let g:chromatica#libclang_path = '/usr/lib/llvm-3.8/lib/libclang.so'
-" let g:chromatica#libclang_path = '/usr/lib/libclang.so.4.0'
-" let g:chromatica#enable_at_startup=1
-" let g:chromatica#highlight_feature_level=0
-
 " ALE linter settings
 let g:airline#extensions#ale#enabled = 1
-" --- ale linting on save vs asynchronously in background
-" let g:ale_lint_on_text_changed = 'never'
-" --- ale linting on opening a file
-" let g:ale_lint_on_enter = 0
+let g:ale_linters = {
+    \   'cpp': ['clang'],
+    \}
+" work with ncm-clang completion
+autocmd BufEnter *.cpp,*.cxx,*.cc,*.c,*.hh,*.h,*.hpp,*.hxx let g:ale_cpp_clang_options = join(ncm_clang#compilation_info()['args'], ' ')
+" (optional, for completion performance) run linters only when I save files
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
 
-" vim-cpp-enhanced-highlight settings
-let c_no_curly_error = 1
-let g:cpp_class_scope_highlight = 1
+" ncm-clang
+" no config necessary
+" default is build/compile_commands.json
+" let g:ncm_clang#database_paths=['../build/compile_commands.json']
+
+" deoplete-clang2
+" let g:deoplete#sources#clang#executable="/usr/bin/clang"
+" needs compile_commands.json in same directory to work as nvim instance
 
 "******** Colorschemes + Status Line ********
 
 set noshowmode " don't let vim itself show modes (let lightline do it)
 
-" lightline.vim
+" " lightline.vim
 let g:lightline = {
       \ 'colorscheme': 'PaperColor',
       \ 'active': {
@@ -253,6 +261,25 @@ let g:lightline = {
       \   'gitbranch': 'fugitive#head'
       \ },
       \ }
+" ale-lightline
+let g:lightline.component_expand = {
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
+      \ }
+let g:lightline.component_type = {
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \     'linter_ok': 'left',
+      \ }
+let g:lightline.active = { 'right': [[ 'linter_errors', 'linter_warnings', 'linter_ok' ], ['percent'], ['lineinfo']] }
+" ---- fontawesome icons
+" let g:lightline#ale#indicator_warnings = "\uf071"
+" let g:lightline#ale#indicator_errors = "\uf05e"
+" let g:lightline#ale#indicator_ok = "\uf00c"
+let g:lightline#ale#indicator_warnings = '!'
+let g:lightline#ale#indicator_errors = 'X'
+let g:lightline#ale#indicator_ok = '~'
 
 " vim-slash
 noremap <plug>(slash-after) zz
@@ -280,7 +307,7 @@ set background=light
 " colorscheme neodark
 
 " light colorscheme
-colorscheme PaperColor
+colorscheme solarized8_light
 
 "italic text
 "let g:two_firewatch_italics=1

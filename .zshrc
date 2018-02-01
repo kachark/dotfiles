@@ -14,6 +14,10 @@ export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$HOME/.cargo/bin
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
+# c++
+# export PATH="/usr/local/Cellar/llvm/5.0.1/bin/:$PATH" clang (brew location)
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+
 # append .zfunc folder to end of function path variable
 # important because compinit function must be called after any other functions
 # this is path for non-oh-my-zsh functions (ie. my additions)
@@ -89,7 +93,7 @@ source $ZSH/oh-my-zsh.sh
 # fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+export ARCHFLAGS="-arch x86_64"
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
