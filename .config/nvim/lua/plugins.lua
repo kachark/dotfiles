@@ -65,5 +65,6 @@ return require('packer').startup(function()
   use 'franbach/miramare'
   use 'folke/tokyonight.nvim'
   use 'EdenEast/nightfox.nvim'
+  use 'Pocco81/Catppuccino.nvim'
 
 end)

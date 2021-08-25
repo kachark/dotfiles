@@ -8,15 +8,8 @@ g.mapleader = ','
 
 --------- Settings ---------
 -- vim.o.background = 'dark'
--- cmd 'colorscheme tokyonight'
--- g.tokyonight_style = "storm"
--- g.tokyonight_italic_functions = true
-g.nightfox_style = "nightfox"
-g.nightfox_color_delimiter = "red"
-g.nightfox_italic_comments = 1
-require('nightfox').set()
 require('settings')
-
+require('colorscheme')
 
 --------- Key Remaps ---------
 require('keymappings')
