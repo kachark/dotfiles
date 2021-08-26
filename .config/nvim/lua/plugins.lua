@@ -11,8 +11,6 @@ return require('packer').startup(function()
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use 'neovim/nvim-lspconfig'
   use 'ojroques/nvim-lspfuzzy'
-  -- use 'nvim-lua/completion-nvim'
-  use 'hrsh7th/nvim-compe'
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
   use {
@@ -32,6 +30,13 @@ return require('packer').startup(function()
 
   use 'onsails/lspkind-nvim'
   use 'tpope/vim-commentary'
+
+  -- completion
+  use 'hrsh7th/nvim-cmp'
+  use 'hrsh7th/cmp-vsnip'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/vim-vsnip'
+  use 'hrsh7th/vim-vsnip-integ'
 
   -- use {'glepnir/galaxyline.nvim', 
   --       branch = 'main',
@@ -62,6 +67,7 @@ return require('packer').startup(function()
     'ray-x/lsp_signature.nvim'
   }
 
+  -- colorschemes
   use 'franbach/miramare'
   use 'folke/tokyonight.nvim'
   use 'EdenEast/nightfox.nvim'

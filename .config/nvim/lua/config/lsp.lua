@@ -4,7 +4,45 @@ local lsp = require('lspconfig')
 -- local lspfuzzy = require('lspfuzzy')
 -- local lspcompletion = require('completion')
 local lsptrouble = require('trouble').setup{} -- error/warning description popup
+local lspkind = require('lspkind')
+local cmp = require('cmp')
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+cmp.setup {
+  snippet = {
+    expand = function(args)
+      -- You must install `vim-vsnip` if you use the following as-is.
+      vim.fn['vsnip#anonymous'](args.body)
+    end
+  },
+
+  -- You can set mapping if you want.
+  mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    })
+  },
+
+  -- You should specify your *installed* sources.
+  sources = {
+    -- { name = 'buffer' },
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+  },
+}
+
+
+-- LSP SETTINGS
 function on_attach(client)
 
   -- lspcompletion.on_attach() -- for completion_nvim
@@ -32,7 +70,7 @@ function on_attach(client)
 
   -- lsp pictograms
   -- commented options are defaults
-  require('lspkind').init({
+  lspkind.init({
       -- with_text = true,
       -- symbol_map = {
       --   Text = '',
@@ -66,10 +104,12 @@ end
 -- lsp.rls.setup{on_attach=on_attach}
 lsp.rust_analyzer.setup({
   on_attach=on_attach,
+  capabilities = capabilities,
   settings = {
         ["rust-analyzer"] = {
             assist = {
-                importMergeBehavior = "last",
+                -- importMergeBehavior = "last",
+                importGranularity = "module",
                 importPrefix = "by_self",
             },
             cargo = {
@@ -78,17 +118,26 @@ lsp.rust_analyzer.setup({
             procMacro = {
                 enable = true
             },
+            -- checkOnSave = {
+            --   command = "clippy"
+            -- },
         }
     }
 })
 -- For ccls we use the default settings
-lsp.ccls.setup {}
+lsp.ccls.setup {
+  capabilities = capabilities,
+}
 -- root_dir is where the LSP server will start: here at the project root otherwise in current folder
 lsp.pyright.setup {root_dir = lsp.util.root_pattern('.git', vim.fn.getcwd())}
-lsp.pyright.setup{on_attach=on_attach}
+lsp.pyright.setup{
+  on_attach=on_attach,
+  capabilities = capabilities,
+}
 
 lsp.texlab.setup({
   on_attach=on_attach,
+  capabilities = capabilities,
   -- settings={
   --   cmd={"tectonic"}
   -- }
@@ -96,34 +145,8 @@ lsp.texlab.setup({
 
 lsp.tsserver.setup({
   on_attach=on_attach,
+  capabilities = capabilities,
 })
 
 -- lspfuzzy.setup {}  -- Make the LSP client use FZF instead of the quickfix list
 
-
-
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  resolve_timeout = 800;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = true;
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    vsnip = true;
-    ultisnips = true;
-  };
-}
