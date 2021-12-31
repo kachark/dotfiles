@@ -3,13 +3,18 @@
 local lsp = require('lspconfig')
 -- local lspfuzzy = require('lspfuzzy')
 -- local lspcompletion = require('completion')
-local lsptrouble = require('trouble').setup{} -- error/warning description popup
+local trouble = require('trouble').setup{} -- error/warning description popup
 local lspkind = require('lspkind')
 local cmp = require('cmp')
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+require('rust-tools.inlay_hints').set_inlay_hints()
+require('rust-tools').setup({})
+
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 
 cmp.setup {
   snippet = {
@@ -38,6 +43,7 @@ cmp.setup {
     -- { name = 'buffer' },
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
+    { name = 'path' },
   },
 }
 
@@ -66,7 +72,8 @@ function on_attach(client)
   buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   -- buf_set_keymap('n', '<space>cx', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', '<space>cx', '<cmd>LspTroubleToggle<CR>', { noremap=true, silent=true })
+  buf_set_keymap('n', '<space>cx', '<cmd>TroubleToggle<CR>', { noremap=true, silent=true })
+  buf_set_keymap('n', 'gR', '<cmd>TroubleToggle lsp_references<CR>', opts)
 
   -- lsp pictograms
   -- commented options are defaults
@@ -118,9 +125,9 @@ lsp.rust_analyzer.setup({
             procMacro = {
                 enable = true
             },
-            -- checkOnSave = {
-            --   command = "clippy"
-            -- },
+            checkOnSave = {
+              command = "clippy"
+            },
         }
     }
 })
@@ -138,14 +145,43 @@ lsp.pyright.setup{
 lsp.texlab.setup({
   on_attach=on_attach,
   capabilities = capabilities,
-  -- settings={
-  --   cmd={"tectonic"}
-  -- }
+  cmd={"texlab"},
+  filetypes = { "tex", "bib" },
+  root_dir = function(fname)
+        return lsp.util.root_pattern '.latexmkrc'(fname) or lsp.util.find_git_ancestor(fname)
+      end,
+  single_file_support = true,
+  settings = {
+    texlab = {
+      auxDirectory = ".",
+      bibtexFormatter = "texlab",
+      formatterLineLength = 80,
+      build = {
+        args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+        executable = "latexmk",
+        forwardSearchAfter = false,
+        onSave = false
+      },
+      chktex = {
+        onEdit = false,
+        onOpenAndSave = false
+      },
+      diagnosticsDelay = 300,
+      formatterLineLength = 80,
+      forwardSearch = {
+        args = {}
+      },
+      latexFormatter = "latexindent",
+      latexindent = {
+        modifyLineBreaks = false
+      },
+    }
+  },
 })
 
 lsp.tsserver.setup({
-  on_attach=on_attach,
-  capabilities = capabilities,
+on_attach=on_attach,
+capabilities = capabilities,
 })
 
 -- lspfuzzy.setup {}  -- Make the LSP client use FZF instead of the quickfix list

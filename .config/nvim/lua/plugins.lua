@@ -10,8 +10,7 @@ return require('packer').startup(function()
   use 'tpope/vim-fugitive'
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use 'neovim/nvim-lspconfig'
-  use 'ojroques/nvim-lspfuzzy'
-  use 'nvim-lua/popup.nvim'
+  use 'ojroques/nvim-lspfuzzy' use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
   use {
     'nvim-telescope/telescope.nvim',
@@ -31,28 +30,38 @@ return require('packer').startup(function()
   use 'onsails/lspkind-nvim'
   use 'tpope/vim-commentary'
 
+  use 'simrat39/rust-tools.nvim'
+
   -- completion
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-vsnip'
   use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-path'
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
 
-  -- use {'glepnir/galaxyline.nvim', 
-  --       branch = 'main',
-  --       config = function() require('config.statusline') end,
-  --       requires = {'kyazdani42/nvim-web-devicons', opt = true}
-  -- }
-
-  use {'famiu/feline.nvim',
-    requires = {'kyazdani42/nvim-web-devicons', opt = true},
-    config = function() require('config.statusline') end
+  use {'NTBBloodbath/galaxyline.nvim', 
+        config = function() require('galaxyline.themes.neonline') end,
+        requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
+
+--   use {
+--     "NvChad/nvim-base16.lua",
+--     after = "packer.nvim",
+--     config = function()
+--        require("colors").init()
+--     end,
+--   }
+
+  -- use {'famiu/feline.nvim',
+  --   requires = {'kyazdani42/nvim-web-devicons', opt = true},
+  --   config = function() require('config.statusline') end
+  -- }
 
 
   -- use 'kyazdani42/nvim-web-devicons'
   use 'iamcco/markdown-preview.nvim'
-  use 'folke/lsp-trouble.nvim'
+  use 'folke/trouble.nvim'
   use {'folke/todo-comments.nvim',
     config = function()
       require('todo-comments').setup {
