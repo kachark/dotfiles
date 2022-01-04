@@ -1,9 +1,6 @@
 
 -- plugin imports
 local lsp = require('lspconfig')
--- local lspfuzzy = require('lspfuzzy')
--- local lspcompletion = require('completion')
-local trouble = require('trouble').setup{} -- error/warning description popup
 local lspkind = require('lspkind')
 local cmp = require('cmp')
 
@@ -16,6 +13,7 @@ require('rust-tools').setup({})
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 
+-- Configure cmp completion
 cmp.setup {
   snippet = {
     expand = function(args)
@@ -51,29 +49,11 @@ cmp.setup {
 -- LSP SETTINGS
 function on_attach(client)
 
-  -- lspcompletion.on_attach() -- for completion_nvim
-
   -- functions
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-    -- Mappings
-  local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  -- buf_set_keymap('n', '<space>cx', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', '<space>cx', '<cmd>TroubleToggle<CR>', { noremap=true, silent=true })
-  buf_set_keymap('n', 'gR', '<cmd>TroubleToggle lsp_references<CR>', opts)
 
   -- lsp pictograms
   -- commented options are defaults
@@ -106,35 +86,37 @@ function on_attach(client)
 end
 
 
--- lsp specific settings --
--- lsp.rls.setup {}
--- lsp.rls.setup{on_attach=on_attach}
-lsp.rust_analyzer.setup({
-  on_attach=on_attach,
-  capabilities = capabilities,
-  settings = {
-        ["rust-analyzer"] = {
-            assist = {
-                -- importMergeBehavior = "last",
-                importGranularity = "module",
-                importPrefix = "by_self",
-            },
-            cargo = {
-                loadOutDirsFromCheck = true
-            },
-            procMacro = {
-                enable = true
-            },
-            checkOnSave = {
-              command = "clippy"
-            },
-        }
-    }
-})
+-- -- lsp specific settings --
+-- -- lsp.rls.setup {}
+-- -- lsp.rls.setup{on_attach=on_attach}
+-- lsp.rust_analyzer.setup({
+--   on_attach=on_attach,
+--   capabilities = capabilities,
+--   settings = {
+--         ["rust-analyzer"] = {
+--             assist = {
+--                 -- importMergeBehavior = "last",
+--                 importGranularity = "module",
+--                 importPrefix = "by_self",
+--             },
+--             cargo = {
+--                 loadOutDirsFromCheck = true
+--             },
+--             procMacro = {
+--                 enable = true
+--             },
+--             checkOnSave = {
+--               command = "clippy"
+--             },
+--         }
+--     }
+-- })
+
 -- For ccls we use the default settings
 lsp.ccls.setup {
   capabilities = capabilities,
 }
+
 -- root_dir is where the LSP server will start: here at the project root otherwise in current folder
 lsp.pyright.setup {root_dir = lsp.util.root_pattern('.git', vim.fn.getcwd())}
 lsp.pyright.setup{

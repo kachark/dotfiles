@@ -37,3 +37,20 @@ map('n', '<leader>h', '<cmd>help_tags<CR>')
 -- map('n', '<leader>h', '<cmd>BTags<CR>')
 -- map('n', '<leader>a', '<cmd>Rg<CR>')
 
+-- Trouble
+map('n', '<space>cx', '<cmd>Trouble<CR>', { noremap=true, silent=true })
+map('n', 'gR', '<cmd>TroubleToggle lsp_references<CR>', { noremap=true, silent=true })
+
+-- LSP
+local opts = { noremap=true, silent=true }
+map('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+map('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+map('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+
