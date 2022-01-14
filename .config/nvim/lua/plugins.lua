@@ -54,11 +54,15 @@ return require('packer').startup(function()
   }
 
   -- Buffer/file/grep
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = {{'nvim-lua/plenary.nvim'}}
+  -- use {
+  --   'nvim-telescope/telescope.nvim',
+  --   requires = {{'nvim-lua/plenary.nvim'}}
+  -- }
+  -- use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use { 'ibhagwan/fzf-lua',
+    -- optional for icon support
+    requires = { 'kyazdani42/nvim-web-devicons' }
   }
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
   -- Language specific
   use 'simrat39/rust-tools.nvim'
@@ -78,6 +82,12 @@ return require('packer').startup(function()
     requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
 
+  -- Bufferline
+  use {
+    'akinsho/bufferline.nvim',
+    requires = 'kyazdani42/nvim-web-devicons'
+  }
+
   -- Highlighting and code inference
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 
@@ -85,6 +95,6 @@ return require('packer').startup(function()
   use 'franbach/miramare'
   use 'folke/tokyonight.nvim'
   use 'EdenEast/nightfox.nvim'
-  use {'catppuccin/nvim', as = "catppuccin"}
+  use 'rebelot/kanagawa.nvim'
 
 end)

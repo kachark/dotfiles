@@ -9,58 +9,22 @@ g.mapleader = ','
 --------- Settings ---------
 -- vim.o.background = 'dark'
 require('settings')
-require('colorscheme')
-
---------- Key Remaps ---------
-require('keymappings')
 
 ---------- Plugins ----------
 require('plugins')
 
+--------- Key Remaps ---------
+require('keymappings')
+
+--------- Colorscheme ---------
+require('colorscheme')
+
 -------- PLUGIN settings ---------
 require('config.lsp')
 require('config.statusline')
-
---- Telescope ---
-local actions = require('telescope.actions')
-
-require('telescope').setup{
-  defaults = {
-    mappings = {
-      i = {
-        -- etc
-        ["<esc>"] = actions.close,
-      },
-      n = {
-        -- etc
-        ["<esc>"] = actions.close,
-      },
-    },
-  }
-}
-
---- TreeSitter ---
-
-local treesitter = require 'nvim-treesitter.configs'
-treesitter.setup {
-  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  ignore_install = { "javascript" }, -- List of parsers to ignore installing
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-    disable = { },  -- list of language that will be disabled
-  },
-}
-
-treesitter.setup {
-  highlight = {
-    enable = true,
-    custom_captures = {
-      -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-      ["foo.bar"] = "Identifier",
-    },
-  },
-}
-
+require('config.bufferline')
+require('config.treesitter')
+require('config.fzf')
 
 --- devicons ---
 
