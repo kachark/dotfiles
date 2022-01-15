@@ -22,7 +22,6 @@ require('colorscheme')
 -------- PLUGIN settings ---------
 require('config.lsp')
 require('config.statusline')
-require('config.bufferline')
 require('config.treesitter')
 require('config.fzf')
 
