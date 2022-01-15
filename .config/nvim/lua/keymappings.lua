@@ -45,12 +45,14 @@ map('n', 'gR', '<cmd>TroubleToggle lsp_references<CR>', { noremap=true, silent=t
 local opts = { noremap=true, silent=true }
 map('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
 map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+map('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts) -- press K once to open hover menu, press K again to move into it
 map('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
 map('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-map('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-map('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 map('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-map('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+map('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+map('n', '<space>Q', '<cmd>lua vim.diagnostic.open_float(0, {scope="line"})<CR>', opts)
+map('n', '<space>q', '<cmd>lua vim.diagnostic.open_float(0, {scope="cursor"})<CR>', opts)
 

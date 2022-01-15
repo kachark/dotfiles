@@ -6,6 +6,8 @@ return require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
+  -- Necessary
+  use 'nvim-lua/plenary.nvim'
   use 'mhinz/vim-startify'
   use 'tpope/vim-commentary'
 
@@ -23,7 +25,6 @@ return require('packer').startup(function()
   use 'neovim/nvim-lspconfig'
   use 'onsails/lspkind-nvim'
   use 'ojroques/nvim-lspfuzzy' use 'nvim-lua/popup.nvim'
-  use 'nvim-lua/plenary.nvim'
 
   use {
     'ray-x/lsp_signature.nvim'
@@ -81,6 +82,9 @@ return require('packer').startup(function()
     'nvim-lualine/lualine.nvim',
     requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
+
+  -- Scrollbar
+  use 'petertriho/nvim-scrollbar'
 
   -- Movement
   use 'ggandor/lightspeed.nvim'

@@ -1,11 +1,12 @@
 
 
 -- -- tokyonight
--- vim.g.tokyonight_style = "storm"
--- vim.g.tokyonight_italic_functions = true
--- vim.cmd 'colorscheme tokyonight'
+vim.g.tokyonight_style = "night"
+vim.g.tokyonight_italic_functions = true
+local colors = require('tokyonight.colors').setup()
+vim.cmd 'colorscheme tokyonight'
 
--- -- nightfox
+-- -- -- nightfox
 -- local nightfox = require('nightfox')
 
 -- -- This function set the configuration of nightfox. If a value is not passed in the setup function
@@ -27,8 +28,23 @@
 -- -- Load the configuration set above and apply the colorscheme
 -- nightfox.load()
 
--- local catppuccin = require('catppuccin')
--- catppuccin.setup({})
--- vim.cmd 'colorscheme catppuccin'
 
-vim.cmd 'colorscheme kanagawa'
+-- local colors = require('kanagawa.colors').setup()
+-- vim.cmd 'colorscheme kanagawa'
+
+
+-- nvim-scrollbar colors to match colorscheme
+require('scrollbar').setup({
+    handle = {
+        color = colors.bg_highlight,
+    },
+    marks = {
+        Search = { color = colors.orange },
+        Error = { color = colors.error },
+        Warn = { color = colors.warning },
+        Info = { color = colors.info },
+        Hint = { color = colors.hint },
+        Misc = { color = colors.purple },
+    }
+})
+
