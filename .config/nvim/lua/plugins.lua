@@ -82,6 +82,9 @@ return require('packer').startup(function()
     requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
 
+  -- Movement
+  use 'ggandor/lightspeed.nvim'
+
   -- Highlighting and code inference
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 
