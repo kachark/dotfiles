@@ -25,10 +25,9 @@ return require('packer').startup(function()
   use 'neovim/nvim-lspconfig'
   use 'onsails/lspkind-nvim'
   use 'ojroques/nvim-lspfuzzy' use 'nvim-lua/popup.nvim'
+  use 'ray-x/lsp_signature.nvim'
 
-  use {
-    'ray-x/lsp_signature.nvim'
-  }
+  use 'folke/lsp-colors.nvim'
 
   -- LSP diagnostic popups
   use {
