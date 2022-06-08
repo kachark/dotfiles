@@ -25,17 +25,17 @@ map('n', '<C-l>', '<C-w><C-l>')
 map('n', '<C-h>', '<C-w><C-h>')
 
 -- nvim-telescope
--- map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
--- map('n', '<leader>g', '<cmd>Telescope live_grep<CR>')
--- map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
--- map('n', '<leader>h', '<cmd>help_tags<CR>')
+map('n', '<leader>f', '<cmd>Telescope find_files<CR>')
+map('n', '<leader>g', '<cmd>Telescope live_grep<CR>')
+map('n', '<leader>b', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>h', '<cmd>help_tags<CR>')
 
 -- -- fzf
-map('n', '<leader>f', '<cmd>FzfLua files<CR>')
-map('n', '<leader>g', '<cmd>FzfLua git_files<CR>')
-map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
-map('n', '<leader>h', '<cmd>FzfLua btags<CR>')
-map('n', '<leader>a', '<cmd>FzfLua grep_project<CR>')
+-- map('n', '<leader>f', '<cmd>FzfLua files<CR>')
+-- map('n', '<leader>g', '<cmd>FzfLua git_files<CR>')
+-- map('n', '<leader>b', '<cmd>FzfLua buffers<CR>')
+-- map('n', '<leader>h', '<cmd>FzfLua btags<CR>')
+-- map('n', '<leader>a', '<cmd>FzfLua grep_project<CR>')
 
 -- Trouble
 map('n', '<space>cx', '<cmd>Trouble<CR>', { noremap=true, silent=true })

@@ -54,27 +54,27 @@ return require('packer').startup(function()
   }
 
   -- Buffer/file/grep
-  -- use {
-  --   'nvim-telescope/telescope.nvim',
-  --   requires = {{'nvim-lua/plenary.nvim'}}
-  -- }
-  -- use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  use { 'ibhagwan/fzf-lua',
-    -- optional for icon support
-    requires = { 'kyazdani42/nvim-web-devicons' }
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = {{'nvim-lua/plenary.nvim'}}
   }
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  -- use { 'ibhagwan/fzf-lua',
+  --   -- optional for icon support
+  --   requires = { 'kyazdani42/nvim-web-devicons' }
+  -- }
 
   -- Language specific
   use 'simrat39/rust-tools.nvim'
   use 'iamcco/markdown-preview.nvim'
 
   -- Completion engine
-  use 'hrsh7th/nvim-cmp'
-  use 'hrsh7th/cmp-vsnip'
   use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-vsnip'
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
+  use 'hrsh7th/nvim-cmp'
 
   -- Statusline
   use {

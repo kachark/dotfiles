@@ -23,7 +23,8 @@ require('colorscheme')
 require('config.lsp')
 require('config.statusline')
 require('config.treesitter')
-require('config.fzf')
+require('config.telescope')
+-- require('config.fzf')
 
 --- devicons ---
 
