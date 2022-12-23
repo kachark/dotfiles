@@ -10,6 +10,7 @@ return require('packer').startup(function()
   use 'nvim-lua/plenary.nvim'
   use 'mhinz/vim-startify'
   use 'tpope/vim-commentary'
+  use 'tpope/vim-repeat'
 
   -- Git
   use 'tpope/vim-fugitive'
@@ -21,13 +22,17 @@ return require('packer').startup(function()
     end
   }
 
+  -- Debugger
+  use 'mfussenegger/nvim-dap'
+  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+
   -- LSP
   use 'neovim/nvim-lspconfig'
   use 'onsails/lspkind-nvim'
   use 'ojroques/nvim-lspfuzzy' use 'nvim-lua/popup.nvim'
   use 'ray-x/lsp_signature.nvim'
-
   use 'folke/lsp-colors.nvim'
+  use 'simrat39/symbols-outline.nvim'
 
   -- LSP diagnostic popups
   use {
@@ -55,14 +60,15 @@ return require('packer').startup(function()
 
   -- Buffer/file/grep
   use {
-    'nvim-telescope/telescope.nvim',
+    'nvim-telescope/telescope.nvim', tag = '0.1.0',
     requires = {{'nvim-lua/plenary.nvim'}}
   }
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  -- use { 'ibhagwan/fzf-lua',
-  --   -- optional for icon support
-  --   requires = { 'kyazdani42/nvim-web-devicons' }
-  -- }
+
+  use { 'ibhagwan/fzf-lua',
+    -- optional for icon support
+    requires = { 'kyazdani42/nvim-web-devicons' }
+  }
 
   -- Language specific
   use 'simrat39/rust-tools.nvim'
@@ -85,8 +91,11 @@ return require('packer').startup(function()
   -- Scrollbar
   use 'petertriho/nvim-scrollbar'
 
+  -- Hotkey plugins
+  use 'folke/which-key.nvim'
+
   -- Movement
-  use 'ggandor/lightspeed.nvim'
+  use 'ggandor/leap.nvim'
 
   -- Highlighting and code inference
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
@@ -96,5 +105,8 @@ return require('packer').startup(function()
   use 'folke/tokyonight.nvim'
   use 'EdenEast/nightfox.nvim'
   use 'rebelot/kanagawa.nvim'
+  use 'Mofiqul/dracula.nvim'
+  use { 'catppuccin/nvim', as = 'catppuccin' }
+  use 'luisiacc/gruvbox-baby'
 
 end)

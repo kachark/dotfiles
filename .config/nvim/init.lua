@@ -14,7 +14,9 @@ require('settings')
 require('plugins')
 
 --------- Key Remaps ---------
-require('keymappings')
+-- require('keymappings')
+require('config.whichkey').setup()
+require('leap').add_default_mappings()
 
 --------- Colorscheme ---------
 require('colorscheme')
@@ -22,9 +24,10 @@ require('colorscheme')
 -------- PLUGIN settings ---------
 require('config.lsp')
 require('config.statusline')
-require('config.treesitter')
-require('config.telescope')
--- require('config.fzf')
+require('config.treesitter').setup()
+require('config.telescope').setup()
+require('config.fzf')
+require('config.dap')
 
 --- devicons ---
 
