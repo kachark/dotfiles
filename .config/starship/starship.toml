@@ -1,0 +1,12 @@
+
+add_newline = true
+
+[directory]
+truncation_length = 20 # Show max 20 directories
+truncate_to_repo = true # if in a git repo truncate path to here
+
+[aws]
+disabled = true
+
+[conda]
+ignore_base = false
