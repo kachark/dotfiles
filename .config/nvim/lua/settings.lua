@@ -13,7 +13,7 @@ opt('b', 'expandtab', true)                           -- Use spaces instead of t
 opt('b', 'shiftwidth', indent)                        -- Size of an indent
 opt('b', 'smartindent', true)                         -- Insert indents automatically
 opt('b', 'tabstop', indent)                           -- Number of spaces tabs count for
-opt('o', 'completeopt', 'menuone,noinsert,noselect')  -- Completion options (for deoplete)
+opt('o', 'completeopt', 'menuone,noinsert,noselect,preview')  -- Completion options
 opt('o', 'hidden', true)                              -- Enable modified buffers in background
 opt('o', 'ignorecase', true)                          -- Ignore case
 opt('o', 'joinspaces', false)                         -- No double spaces with join after a dot
@@ -86,10 +86,3 @@ opt('w', 'wrap', false)                               -- Disable line wrap
 --           \ | autocmd! matchparen_cursorcolumn_setup
 --   augroup END
 -- endif
-
-
-
-
-
-
-

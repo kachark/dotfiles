@@ -8,6 +8,8 @@ function M.setup()
 
   telescope.setup({
     defaults = {
+      layout_strategy = "vertical",
+      -- layout_strategy = "flex",
       mappings = {
         -- ESC will exit telescope window on first hit
         i = {
@@ -18,7 +20,7 @@ function M.setup()
 
     pickers = {
       buffers = {
-        --achieve similar functionality to FZF buffer ordering
+        -- achieve similar functionality to FZF buffer ordering
         ignore_current_buffer = true,
         sort_mru = true,
       },
@@ -37,7 +39,7 @@ function M.setup()
 
   -- To get fzf loaded and working with telescope, you need to call
   -- load_extension, somewhere after setup function:
-  require('telescope').load_extension('fzf')
+  telescope.load_extension('fzf')
 
 end
 
