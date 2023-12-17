@@ -3,7 +3,8 @@ M = {}
 
 --- TreeSitter ---
 function M.setup()
-  local treesitter = require 'nvim-treesitter.configs'
+  local treesitter = require('nvim-treesitter.configs')
+
   treesitter.setup {
     ensure_installed = {
       "c",
@@ -11,6 +12,7 @@ function M.setup()
       "lua",
       "rust",
       "python",
+      "svelte",
       "css",
       "typescript",
       "javascript",
@@ -23,13 +25,6 @@ function M.setup()
     highlight = {
       enable = true,              -- false will disable the whole extension
       disable = { },  -- list of language that will be disabled
-    },
-  }
-
-  treesitter.setup {
-    highlight = {
-      enable = true, -- false will disable the whole extension
-      disable = { }, -- list of languages that will be disabled
     },
   }
 end

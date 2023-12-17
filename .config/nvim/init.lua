@@ -5,29 +5,29 @@ local g = vim.g
 
 g.mapleader = ','
 
+-- Set LSP log level --
+vim.lsp.set_log_level(vim.lsp.log_levels.INFO)
 
 --------- Settings ---------
--- vim.o.background = 'dark'
-require('settings')
+require('settings') -- options, autocmds
+require('defaults').setup() -- icons, styling
 
 ---------- Plugins ----------
 require('plugins')
 
 --------- Key Remaps ---------
 -- require('keymappings')
-require('config.whichkey').setup()
-require('leap').add_default_mappings()
+require('plugins.whichkey').setup()
 
---------- Colorscheme ---------
-require('colorscheme')
-
--------- PLUGIN settings ---------
-require('config.lsp')
-require('config.statusline')
-require('config.treesitter').setup()
-require('config.telescope').setup()
-require('config.fzf')
-require('config.dap')
+-------- Plugin settings ---------
+require('plugins.lsp').setup()
+require('plugins.statusline').setup()
+require('plugins.treesitter').setup()
+require('plugins.telescope').setup()
+require('plugins.fzf').setup()
+require('plugins.dap').setup()
+require('plugins.gitsigns').setup()
+require('plugins.dressing').setup()
 
 --- devicons ---
 
