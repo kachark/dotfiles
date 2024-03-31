@@ -6,9 +6,9 @@ function M.setup()
   -- plugin imports
   local lsp = require('lspconfig')
   local cmp = require('cmp')
-  local rust_tools = require('rust-tools')
   local ts_tools = require('typescript-tools')
   require('symbols-outline').setup()
+  require('lsp-inlayhints').setup() -- keep until nvim 0.10 and then update the rustacean config
 
   -- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -179,7 +179,7 @@ function M.setup()
     capabilities = capabilities
   })
 
---   -- Rust (rust-tools.nvim replaces rust LSP config - see below)
+--   -- Rust (This is the lspconfig barebones setup for Rust. Now using rustaceanvim instead)
 --   lsp.rust_analyzer.setup({
 --     on_attach=on_attach,
 --     capabilities = capabilities,
@@ -189,43 +189,9 @@ function M.setup()
 --     },
 --   })
 
-
-  -- rust-tools.nvim config with nvim-dap configured
-  local extension_path = vim.env.HOME .. '/.vscode/extensions/vadimcn.vscode-lldb-1.8.1/'
-  local codelldb_path = extension_path .. 'adapter/codelldb'
-  local liblldb_path = extension_path .. 'lldb/lib/liblldb.dylib'
-
-  local rust_tools_opts = {
-
-      -- defaults are auto populated and don't need to be specified unless making custom changes
-
-      -- all the opts to send to nvim-lspconfig
-      -- these override the defaults set by rust-tools.nvim
-      -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
-      server = {
-        -- standalone file support
-        -- setting it to false may improve startup time
-        standalone = true,
-
-        -- custom stuff
-        on_attach= function(_, bufnr)
-          -- Hover actions
-          vim.keymap.set("n", "<C-space>", rust_tools.hover_actions.hover_actions, { buffer = bufnr })
-          -- Code action groups
-          vim.keymap.set("n", "<Leader>a", rust_tools.code_action_group.code_action_group, { buffer = bufnr })
-        end,
-        capabilities = capabilities,
-
-      }, -- rust-analyer options
-
-      -- debugging stuff
-      dap = {
-          adapter = require('rust-tools.dap').get_codelldb_adapter(
-            codelldb_path, liblldb_path)
-      }
-  }
-
-  rust_tools.setup(rust_tools_opts)
+  -- Rust using rustaceanvim
+  local rustaceanvim_config = require('plugins.extras.lang.rust')
+  vim.g.rustaceanvim = rustaceanvim_config
 
 end
 

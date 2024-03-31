@@ -6,7 +6,7 @@ local g = vim.g
 g.mapleader = ','
 
 -- Set LSP log level --
-vim.lsp.set_log_level(vim.lsp.log_levels.INFO)
+vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
 
 --------- Settings ---------
 require('settings') -- options, autocmds

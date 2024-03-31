@@ -78,9 +78,9 @@ return require("lazy").setup({
   -- Debugger
   -- **************************
   {
-    'mfussenegger/nvim-dap',
+    'rcarriga/nvim-dap-ui',
     dependencies = {
-      'rcarriga/nvim-dap-ui',
+      'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio'
     },
     -- setup later by config/dap.lua
     lazy = true,
@@ -162,7 +162,15 @@ return require("lazy").setup({
   -- **************************
   -- Language specific
   -- **************************
-  'simrat39/rust-tools.nvim',
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^4', -- Recommended
+    ft = { 'rust' }
+  },
+  -- KEEP until 0.10 at which point inlay hints will be part of neovim
+  {
+    'lvimuser/lsp-inlayhints.nvim'
+  },
 
   {
     "iamcco/markdown-preview.nvim",

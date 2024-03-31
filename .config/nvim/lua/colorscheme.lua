@@ -68,7 +68,8 @@ function M.setup()
         surface2 = "#504844",
         surface1 = "#3a3634",
         surface0 = "#252525",
-        base = "#151515",
+        -- base = "#151515",
+        base = "#1A1E18", -- a lighter background
         mantle = "#0e0e0e",
         crust = "#080808",
       },
