@@ -8,7 +8,6 @@ function M.setup()
   local cmp = require('cmp')
   local ts_tools = require('typescript-tools')
   require('symbols-outline').setup()
-  require('lsp-inlayhints').setup() -- keep until nvim 0.10 and then update the rustacean config
 
   -- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
   local capabilities = require('cmp_nvim_lsp').default_capabilities()

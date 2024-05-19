@@ -23,7 +23,6 @@ opt('o', 'sidescrolloff', 8 )                         -- Columns of context
 opt('o', 'smartcase', true)                           -- Don't ignore case with capitals
 opt('o', 'splitbelow', true)                          -- Put new windows below current
 opt('o', 'splitright', true)                          -- Put new windows right of current
-opt('o', 'termguicolors', true)                       -- True color support
 opt('o', 'wildmode', 'list:longest')                  -- Command-line completion mode
 opt('w', 'list', true)                                -- Show some invisible characters (tabs...)
 opt('w', 'number', true)                              -- Print line number

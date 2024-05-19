@@ -18,7 +18,7 @@ return require("lazy").setup({
   -- **************************
   'nvim-lua/plenary.nvim',
   'mhinz/vim-startify',
-  -- 'tpope/vim-commentary',
+  -- Needed for svelte commenting (not support in Nvim 0.10)
   {
     'numToStr/Comment.nvim',
     config = function()
@@ -167,11 +167,6 @@ return require("lazy").setup({
     version = '^4', -- Recommended
     ft = { 'rust' }
   },
-  -- KEEP until 0.10 at which point inlay hints will be part of neovim
-  {
-    'lvimuser/lsp-inlayhints.nvim'
-  },
-
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -281,6 +276,15 @@ return require("lazy").setup({
         },
       })
     end
+  },
+  {
+    'brenoprata10/nvim-highlight-colors',
+    config = function()
+      require('nvim-highlight-colors').setup({
+        enable_named_colors = false,
+        enable_tailwind = true,
+      })
+    end,
   },
 
   -- **************************
