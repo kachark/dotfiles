@@ -7,7 +7,6 @@ function M.setup()
   local lsp = require('lspconfig')
   local cmp = require('cmp')
   local ts_tools = require('typescript-tools')
-  require('symbols-outline').setup()
 
   -- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
   local capabilities = require('cmp_nvim_lsp').default_capabilities()

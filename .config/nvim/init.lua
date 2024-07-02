@@ -8,6 +8,7 @@ g.mapleader = ','
 -- Set LSP log level --
 vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
 vim.lsp.inlay_hint.enable()
+-- vim.opt.guicursor="n-v-c:blinkon10-blinkoff10"
 
 --------- Settings ---------
 require('settings') -- options, autocmds

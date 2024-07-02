@@ -28,26 +28,28 @@ function M.setup()
       f = {
         name = "+Find",
         -- FZF
-        -- f = { "<cmd>FzfLua files<cr>", "Find File" },
-        -- g = { "<cmd>FzfLua git_files<cr>", "Find Git Files" },
-        -- b = { "<cmd>FzfLua buffers<cr>", "Find Buffers" },
-        -- h = { "<cmd>FzfLua btags<cr>", "Find Buffer Tags" },
+        f = { "<cmd>FzfLua files<cr>", "Find File" },
+        g = { "<cmd>FzfLua git_files<cr>", "Find Git Files" },
+        b = { "<cmd>FzfLua buffers<cr>", "Find Buffers" },
+        h = { "<cmd>FzfLua btags<cr>", "Find Buffer Tags" },
         -- a = { "<cmd>FzfLua grep_project<cr>", "Grep Project" },
-        -- s = { "<cmd>FzfLua lgrep_curbuf<cr>", "Grep Buffer" },
+        a = { "<cmd>FzfLua live_grep_glob<cr>", "Grep Project" },
+        s = { "<cmd>FzfLua lgrep_curbuf<cr>", "Grep Buffer" },
 
         -- Telescope
-        f = { "<cmd>Telescope find_files<cr>", "Find File" },
-        g = { "<cmd>Telescope git_files<cr>", "Find Git Files" },
-        b = { "<cmd>Telescope buffers<cr>", "Find Buffers" },
-        h = { "<cmd>Telescope current_buffer_tags<cr>", "Find Buffer Tags" },
-        a = { "<cmd>Telescope live_grep<cr>", "Grep Project" },
-        s = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Grep Buffer" },
+        -- f = { "<cmd>Telescope find_files<cr>", "Find File" },
+        -- g = { "<cmd>Telescope git_files<cr>", "Find Git Files" },
+        -- b = { "<cmd>Telescope buffers<cr>", "Find Buffers" },
+        -- h = { "<cmd>Telescope current_buffer_tags<cr>", "Find Buffer Tags" },
+        -- a = { "<cmd>Telescope live_grep<cr>", "Grep Project" },
+        -- s = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Grep Buffer" },
       },
 
       l = {
         name = "+Language Server",
         -- Trouble
-        r = { "<cmd>TroubleToggle lsp_references<cr>", "Show Symbol References" },
+        r = { "<cmd>Trouble lsp toggle focus=false win.position=right win.size.width=0.4<cr>", "Show Symbol References" },
+        y = { "<cmd>Trouble symbols toggle focus=false win.size.width=0.4<cr>", "Show Symbol Tree For Current Buffer" },
 
         -- NVIM-LSP
         d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "Jump To Symbol Definition" },
@@ -56,9 +58,6 @@ function M.setup()
         i = { "<cmd>lua vim.lsp.buf.implementation()<cr>", "List All Symbol Implementations" },
         h = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Display Symbol Signature Information" },
         a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Prompt For Code Actions" },
-
-        -- Symbols-outline
-        y = { "<cmd>SymbolsOutline<cr>", "Show Symbol Tree For Current Buffer" },
       },
 
       q = {
@@ -69,7 +68,8 @@ function M.setup()
         Q = { "<cmd>lua vim.diagnostic.open_float(0, {scope='line'})<cr>", "Show Diagnostics For Line" },
 
         -- Trouble
-        d = { "<cmd>TroubleToggle document_diagnostics<cr>", "Document Diagnostics" },
+        d = { "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", "Document Diagnostics" },
+        D = { "<cmd>Trouble diagnostics toggle<cr>", "Diagnostics" },
       },
 
       x = {

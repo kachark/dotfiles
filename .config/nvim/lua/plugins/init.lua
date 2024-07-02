@@ -96,12 +96,6 @@ return require("lazy").setup({
   },
   'ray-x/lsp_signature.nvim',
   'nvim-lua/popup.nvim',
-  {
-    'simrat39/symbols-outline.nvim',
-    config = function()
-      require('symbols-outline').setup()
-    end,
-  },
 
   -- **************************
   -- LSP diagnostic popups

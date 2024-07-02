@@ -17,7 +17,7 @@ opt('o', 'completeopt', 'menuone,noinsert,noselect,preview')  -- Completion opti
 opt('o', 'hidden', true)                              -- Enable modified buffers in background
 opt('o', 'ignorecase', true)                          -- Ignore case
 opt('o', 'joinspaces', false)                         -- No double spaces with join after a dot
-opt('o', 'scrolloff', 5 )                             -- Lines of context
+opt('o', 'scrolloff', 10 )                             -- Lines of context
 opt('o', 'shiftround', true)                          -- Round indent
 opt('o', 'sidescrolloff', 8 )                         -- Columns of context
 opt('o', 'smartcase', true)                           -- Don't ignore case with capitals
@@ -28,8 +28,6 @@ opt('w', 'list', true)                                -- Show some invisible cha
 opt('w', 'number', true)                              -- Print line number
 opt('w', 'relativenumber', true)                      -- Relative line numbers
 opt('w', 'wrap', false)                               -- Disable line wrap
-
-
 
 -- function nvim_create_augroups(definitions)
 --   for group_name, definition in pairs(definitions) do
