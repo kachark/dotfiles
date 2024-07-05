@@ -86,6 +86,9 @@ function M.setup()
 
   -- -- lsp specific settings --
 
+  -- lua
+  lsp.lua_ls.setup{}
+
   -- C/C++
   lsp.clangd.setup{
     on_attach=on_attach,

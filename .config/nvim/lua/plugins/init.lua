@@ -257,20 +257,20 @@ return require("lazy").setup({
     -- setup later in config/treesitter.lua
     lazy = true,
   },
-  {
-    'RRethy/vim-illuminate',
-    config = function()
-      require('illuminate').configure({
-        opts = {
-          delay = 200,
-          large_file_cutoff = 2000,
-          large_file_overrides = {
-            providers = { "lsp" },
-          },
-        },
-      })
-    end
-  },
+  -- {
+  --   'RRethy/vim-illuminate',
+  --   config = function()
+  --     require('illuminate').configure({
+  --       opts = {
+  --         delay = 200,
+  --         large_file_cutoff = 2000,
+  --         large_file_overrides = {
+  --           providers = { "lsp" },
+  --         },
+  --       },
+  --     })
+  --   end
+  -- },
   {
     'brenoprata10/nvim-highlight-colors',
     config = function()
@@ -287,6 +287,9 @@ return require("lazy").setup({
   'franbach/miramare',
   {
     'folke/tokyonight.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {},
   },
   'rebelot/kanagawa.nvim',
   'Mofiqul/dracula.nvim',

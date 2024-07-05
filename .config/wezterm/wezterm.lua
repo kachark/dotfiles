@@ -29,12 +29,32 @@ end
 config.freetype_load_flags = 'NO_HINTING'
 
 -- config.font = wezterm.font("SF Mono")
-config.font = wezterm.font("JetBrains Mono")
+
+-- config.font = wezterm.font("JetBrains Mono")
+
 -- config.font = wezterm.font("Cascadia Code PL")
 -- config.font = wezterm.font("FiraCode Nerd Font")
 -- config.font = wezterm.font("CaskaydiaCove Nerd Font")
 -- config.font = wezterm.font("Hack Nerd Font")
-config.font_size = 12
+
+-- config.font_size = 12
+
+config.font = wezterm.font("Monaspace Neon")
+config.font_size = 12.0
+config.harfbuzz_features = { 'calt', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'ss09', 'liga'}
+config.font_rules = {
+  {
+    intensity = "Normal",
+    italic = true,
+    font = wezterm.font({
+      family = 'Hack Nerd Font', 
+      weight = "Regular",
+      italic = true
+    }),
+  },
+}
+
+
 -- config.color_scheme = "Snazzy"
 -- config.color_scheme = "Dracula (Official)"
 -- config.color_scheme = "Poimandres"
