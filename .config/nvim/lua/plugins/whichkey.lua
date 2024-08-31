@@ -64,14 +64,14 @@ function M.setup()
 
     { "<leader>x", group = "+Debug (Must Be Configured)" },
     -- NVIM-DAP (Debugger)
-    { "<leader>b", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", desc = "Toggle Breakpoint" },
-    { "<leader>c", "<cmd>lua require'dap'.continue()<cr>", desc = "Continue" },
-    { "<leader>o", "<cmd>lua require'dap'.step_over()<cr>", desc = "Step Over" },
-    { "<leader>i", "<cmd>lua require'dap'.step_into()<cr>", desc = "Step Into" },
-    { "<leader>O", "<cmd>lua require'dap'.step_out()<cr>", desc = "Step Out" },
-    { "<leader>r", "<cmd>lua require'dap'.repl.open()<cr>", desc = "Open REPL" },
-    { "<leader>l", "<cmd>lua require'dap'.run_last()<cr>", desc = "Run Last" },
-    { "<leader>u", "<cmd>lua require'dapui'.toggle()<cr>", desc = "Toggle UI" },
+    { "<leader>xb", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", desc = "Toggle Breakpoint" },
+    { "<leader>xc", "<cmd>lua require'dap'.continue()<cr>", desc = "Continue" },
+    { "<leader>xo", "<cmd>lua require'dap'.step_over()<cr>", desc = "Step Over" },
+    { "<leader>xi", "<cmd>lua require'dap'.step_into()<cr>", desc = "Step Into" },
+    { "<leader>xO", "<cmd>lua require'dap'.step_out()<cr>", desc = "Step Out" },
+    { "<leader>xr", "<cmd>lua require'dap'.repl.open()<cr>", desc = "Open REPL" },
+    { "<leader>xl", "<cmd>lua require'dap'.run_last()<cr>", desc = "Run Last" },
+    { "<leader>xu", "<cmd>lua require'dapui'.toggle()<cr>", desc = "Toggle UI" },
   }
 
   wk.add(mappings, opts)
