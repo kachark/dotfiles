@@ -10,10 +10,13 @@ return {
 
       -- you can also put keymaps in here
       local wk = require("which-key")
-      wk.register({
-        ["<leader>cR"] = { function() vim.cmd.RustLsp("codeAction") end, "Code Action" },
-        ["<leader>dr"] = { function() vim.cmd.RustLsp("debuggables") end, "Code Debuggables" },
-      }, { mode = "n", buffer = bufnr })
+      wk.add({
+        { "<leader>cR" , function() vim.cmd.RustLsp("codeAction") end, desc = "Code Action" },
+        { "<leader>dr" , function() vim.cmd.RustLsp("debuggables") end, desc = "Code Debuggables" },
+      },
+      {
+        mode = { "n" }
+      })
     end,
     settings = {
       -- rust-analyzer language server configuration

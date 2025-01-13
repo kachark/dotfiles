@@ -24,6 +24,7 @@ if wezterm.config_builder then
 end
 
 -- This is where you actually apply your config choices
+config.max_fps = 120
 
 -- https://github.com/wez/wezterm/issues/3774
 config.freetype_load_flags = 'NO_HINTING'

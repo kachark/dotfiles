@@ -85,9 +85,9 @@ function M.setup()
   -- local colors = require("dracula").colors()
   -- vim.cmd[[colorscheme dracula]]
 
-  -- -- -- tokyonight
-  -- vim.g.tokyonight_style = "night"
-  -- vim.g.tokyonight_italic_functions = true
+  -- -- tokyonight
+  vim.g.tokyonight_style = "night"
+  vim.g.tokyonight_italic_functions = true
   local colors = require('tokyonight.colors').setup()
   vim.cmd[[colorscheme tokyonight-night]]
 
@@ -97,11 +97,13 @@ function M.setup()
   -- local colors = require('nightfox.palette').load()
 
 
-  -- vim.cmd 'colorscheme kanagawa-wave'
+  -- vim.cmd[[colorscheme kanagawa-wave]]
   -- local colors = require('kanagawa.colors').setup()
   -- local palette_colors = colors.palette
   -- local theme_colors = colors.theme
 
+  -- colors = require('modus-themes.colors').setup()
+  -- vim.cmd([[colorscheme modus_vivendi]]) -- modus_operandi, modus_vivendi
 
   -- nvim-scrollbar colors to match colorscheme
   require('scrollbar').setup({

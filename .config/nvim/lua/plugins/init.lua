@@ -131,7 +131,7 @@ return require("lazy").setup({
   -- **************************
   {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.5',
+    tag = '0.1.8',
     dependencies = {
       'nvim-lua/plenary.nvim'
     },
@@ -156,11 +156,11 @@ return require("lazy").setup({
   -- **************************
   -- Language specific
   -- **************************
-  {
-    'mrcjkb/rustaceanvim',
-    version = '^4', -- Recommended
-    ft = { 'rust' }
-  },
+  -- {
+  --   'mrcjkb/rustaceanvim',
+  --   version = '^5', -- Recommended
+  --   lazy = false, -- This plugin is already lazy
+  -- },
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -182,6 +182,7 @@ return require("lazy").setup({
   -- **************************
   {
     'hrsh7th/nvim-cmp',
+    version = false,
     dependencies = {
       'hrsh7th/cmp-nvim-lsp', -- source for lsp
       'hrsh7th/cmp-nvim-lua', -- source for lua
@@ -304,5 +305,9 @@ return require("lazy").setup({
     end,
   },
   'luisiacc/gruvbox-baby',
+  {
+    'miikanissi/modus-themes.nvim',
+    priority = 1000
+  },
 
 })
