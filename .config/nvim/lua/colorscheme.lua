@@ -75,7 +75,7 @@ function M.setup()
       },
     }
   })
-  -- vim.cmd.colorscheme "catppuccin"
+  vim.cmd.colorscheme "catppuccin"
   -- vim.cmd.colorscheme "catppuccin-mocha"
 
   -- vim.cmd.colorscheme "gruvbox-baby"
@@ -85,11 +85,11 @@ function M.setup()
   -- local colors = require("dracula").colors()
   -- vim.cmd[[colorscheme dracula]]
 
-  -- -- tokyonight
-  vim.g.tokyonight_style = "night"
-  vim.g.tokyonight_italic_functions = true
-  local colors = require('tokyonight.colors').setup()
-  vim.cmd[[colorscheme tokyonight-night]]
+  -- -- -- tokyonight
+  -- vim.g.tokyonight_style = "night"
+  -- vim.g.tokyonight_italic_functions = true
+  -- local colors = require('tokyonight.colors').setup()
+  -- vim.cmd[[colorscheme tokyonight-night]]
 
   -- -- -- nightfox
   -- local nightfox = require('nightfox')
