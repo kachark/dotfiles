@@ -30,14 +30,6 @@ function M.setup()
     { "<leader>fa", "<cmd>FzfLua live_grep_glob<cr>", desc = "Grep Project" },
     { "<leader>fs", "<cmd>FzfLua lgrep_curbuf<cr>", desc = "Grep Buffer" },
 
-    -- -- Telescope
-    -- { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File" },
-    -- { "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Find Git Files" },
-    -- { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Find Buffers" },
-    -- { "<leader>fh", "<cmd>Telescope current_buffer_tags<cr>", desc = "Find Buffer Tags" },
-    -- { "<leader>fa", "<cmd>Telescope live_grep<cr>", desc = "Grep Project" },
-    -- { "<leader>fs", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Grep Buffer" },
-
     { "<leader>l", group = "+Language Server" },
     -- Trouble
     { "<leader>lr", "<cmd>Trouble lsp toggle focus=false win.position=right win.size.width=0.4<cr>", desc = "Show Symbol References" },

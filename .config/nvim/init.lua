@@ -23,13 +23,12 @@ require('plugins.whichkey').setup()
 
 -------- Plugin settings ---------
 require('plugins.lsp').setup()
+require('plugins.blink').setup()
 require('plugins.statusline').setup()
 require('plugins.treesitter').setup()
-require('plugins.telescope').setup()
 require('plugins.fzf').setup()
-require('plugins.dap').setup()
+-- require('plugins.dap').setup()
 require('plugins.gitsigns').setup()
-require('plugins.dressing').setup()
 
 --- devicons ---
 

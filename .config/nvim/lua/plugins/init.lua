@@ -45,23 +45,30 @@ return require("lazy").setup({
   },
 
   -- **************************
-  -- UI
+  -- Misc.
   -- **************************
   {
-    'stevearc/dressing.nvim',
-    lazy = true,
-    init = function()
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.select = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } })
-        return vim.ui.select(...)
-      end
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.input = function(...)
-        require("lazy").load({ plugins = { "dressing.nvim" } })
-        return vim.ui.input(...)
-      end
-    end,
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      bigfile = { enabled = false },
+      dashboard = { enabled = false },
+      explorer = { enabled = false },
+      indent = { enabled = false },
+      input = { enabled = true },
+      picker = { enabled = false },
+      notifier = { enabled = false },
+      quickfile = { enabled = false },
+      scope = { enabled = false },
+      scroll = { enabled = false },
+      statuscolumn = { enabled = false },
+      words = { enabled = false },
+    },
   },
 
   -- **************************
@@ -130,22 +137,6 @@ return require("lazy").setup({
   -- Buffer/file/grep
   -- **************************
   {
-    'nvim-telescope/telescope.nvim',
-    tag = '0.1.8',
-    dependencies = {
-      'nvim-lua/plenary.nvim'
-    },
-    -- setup later in config/telescope.lua
-    lazy = true,
-  },
-  {
-    'nvim-telescope/telescope-fzf-native.nvim',
-    build = 'make',
-    -- setup later in config/telescope.lua
-    lazy = true,
-  },
-
-  {
     'ibhagwan/fzf-lua',
     -- optional for icon support
     dependencies = {
@@ -156,11 +147,11 @@ return require("lazy").setup({
   -- **************************
   -- Language specific
   -- **************************
-  -- {
-  --   'mrcjkb/rustaceanvim',
-  --   version = '^5', -- Recommended
-  --   lazy = false, -- This plugin is already lazy
-  -- },
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^5', -- Recommended
+    lazy = false, -- This plugin is already lazy
+  },
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -203,6 +194,27 @@ return require("lazy").setup({
       history = true,
       delete_check_events = "TextChanged",
     }
+  },
+
+  {
+    'saghen/blink.cmp',
+    dependencies = {
+      -- optional: provides snippets for the snippet source
+      'rafamadriz/friendly-snippets',
+      -- optional: icons in completion menu
+      'onsails/lspkind.nvim',
+      'kyazdani42/nvim-web-devicons',
+    },
+
+    -- use a release tag to download pre-built binaries
+    version = '*',
+    -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+    -- build = 'cargo build --release',
+    -- If you use nix, you can build from source using latest nightly rust with:
+    -- build = 'nix run .#build-plugin',
+
+    -- setup later in config/blink.lua
+    lazy = true,
   },
 
   -- **************************
