@@ -1,5 +1,5 @@
 
-M = {}
+local M = {}
 
 --- TreeSitter ---
 function M.setup()

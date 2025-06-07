@@ -1,6 +1,6 @@
 local Util = require("util")
 
-M = {}
+local M = {}
 
 -- Lualine statusline configuration with custom components
 -- uses utilities from /util

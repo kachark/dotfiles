@@ -10,7 +10,7 @@ function ToggleInlayHints()
   end
 end
 
-M = {}
+local M = {}
 
 function M.setup()
 
@@ -180,7 +180,7 @@ function M.setup()
   -- end
 
   -- -- Rust using rustaceanvim
-  local rustaceanvim_config = require('plugins.extras.lang.rust')
+  local rustaceanvim_config = require('plugins.lang.rust')
   rustaceanvim_config.server.capabilities = vim.lsp.protocol.make_client_capabilities();
   vim.g.rustaceanvim = rustaceanvim_config
 

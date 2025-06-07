@@ -28,16 +28,15 @@ require('defaults').setup() -- icons, styling
 require('plugins')
 
 --------- Key Remaps ---------
--- require('keymappings')
-require('plugins.whichkey').setup()
+require('plugins.tools.whichkey').setup()
 
 -------- Plugin settings ---------
-require('plugins.lsp').setup()
-require('plugins.blink').setup()
-require('plugins.statusline').setup()
-require('plugins.treesitter').setup()
-require('plugins.fzf').setup()
-require('plugins.gitsigns').setup()
+require('plugins.core.lsp').setup()
+require('plugins.core.blink').setup()
+require('plugins.ui.statusline').setup()
+require('plugins.core.treesitter').setup()
+require('plugins.tools.fzf').setup()
+require('plugins.ui.gitsigns').setup()
 
 --- devicons ---
 

@@ -1,5 +1,5 @@
 
-M = {}
+local M = {}
 
 function M.setup()
 
