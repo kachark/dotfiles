@@ -1,12 +1,15 @@
----@class lazyvim.util.ui
+-- UI utility functions
+-- Provides helpers for signs, highlights, folding, and statuscolumn
+
+---@class util.ui
 local M = {}
 
 ---@alias Sign {name:string, text:string, texthl:string, priority:number}
 
--- Returns a list of regular and extmark signs sorted by priority (low to high)
+-- Get all signs (regular and extmarks) for a buffer line, sorted by priority
 ---@return Sign[]
----@param buf number
----@param lnum number
+---@param buf number Buffer number
+---@param lnum number Line number
 function M.get_signs(buf, lnum)
   -- Get regular signs
   ---@type Sign[]
@@ -42,9 +45,10 @@ function M.get_signs(buf, lnum)
   return signs
 end
 
+-- Get vim mark for a specific buffer line
 ---@return Sign?
----@param buf number
----@param lnum number
+---@param buf number Buffer number
+---@param lnum number Line number
 function M.get_mark(buf, lnum)
   local marks = vim.fn.getmarklist(buf)
   vim.list_extend(marks, vim.fn.getmarklist())
@@ -55,8 +59,9 @@ function M.get_mark(buf, lnum)
   end
 end
 
----@param sign? Sign
----@param len? number
+-- Format a sign into an icon string with proper padding and highlight
+---@param sign? Sign Sign data
+---@param len? number Target width (default 2)
 function M.icon(sign, len)
   sign = sign or {}
   len = len or 2
@@ -65,13 +70,14 @@ function M.icon(sign, len)
   return sign.texthl and ("%#" .. sign.texthl .. "#" .. text .. "%*") or text
 end
 
+-- Custom fold text function using treesitter when available
 function M.foldtext()
   local ok = pcall(vim.treesitter.get_parser, vim.api.nvim_get_current_buf())
   local ret = ok and vim.treesitter.foldtext and vim.treesitter.foldtext()
   if not ret or type(ret) == "string" then
     ret = { { vim.api.nvim_buf_get_lines(0, vim.v.lnum - 1, vim.v.lnum, false)[1], {} } }
   end
-  table.insert(ret, { " " .. require("lazyvim.config").icons.misc.dots })
+  table.insert(ret, { " " .. require("defaults").icons.misc.dots })
 
   if not vim.treesitter.foldtext then
     return table.concat(
@@ -84,6 +90,7 @@ function M.foldtext()
   return ret
 end
 
+-- Custom statuscolumn function that shows signs, marks, folds, and line numbers
 function M.statuscolumn()
   local win = vim.g.statusline_winid
   local buf = vim.api.nvim_win_get_buf(win)
@@ -132,6 +139,7 @@ function M.statuscolumn()
   return table.concat(components, "")
 end
 
+-- Get foreground color from highlight group
 function M.fg(name)
   ---@type {foreground?:number}?
   ---@diagnostic disable-next-line: deprecated
@@ -141,9 +149,11 @@ function M.fg(name)
   return fg and { fg = string.format("#%06x", fg) } or nil
 end
 
+-- Cache to skip foldexpr for buffers without treesitter parser
 M.skip_foldexpr = {} ---@type table<number,boolean>
 local skip_check = assert(vim.loop.new_check())
 
+-- Custom foldexpr function using treesitter when available
 function M.foldexpr()
   local buf = vim.api.nvim_get_current_buf()
 

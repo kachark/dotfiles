@@ -1,21 +1,16 @@
+-- Utility functions for Neovim configuration
+-- Provides helper functions for plugin management, LSP, UI, and file operations
+
 local LazyUtil = require("lazy.core.util")
 
----@class lazyvim.util: LazyUtilCore
----@field ui lazyvim.util.ui
----@field lsp lazyvim.util.lsp
----@field root lazyvim.util.root
----@field telescope lazyvim.util.telescope
----@field terminal lazyvim.util.terminal
----@field toggle lazyvim.util.toggle
----@field format lazyvim.util.format
----@field plugin lazyvim.util.plugin
----@field extras lazyvim.util.extras
----@field inject lazyvim.util.inject
----@field news lazyvim.util.news
----@field json lazyvim.util.json
----@field lualine lazyvim.util.lualine
+---@class util
+---@field ui util.ui
+---@field lsp util.lsp
+---@field root util.root
+---@field lualine util.lualine
 local M = {}
 
+-- Map of deprecated function names to their new locations
 ---@type table<string, string|string[]>
 local deprecated = {
   get_clients = "lsp",
@@ -23,17 +18,18 @@ local deprecated = {
   on_rename = "lsp",
   root_patterns = { "root", "patterns" },
   get_root = { "root", "get" },
-  float_term = { "terminal", "open" },
-  toggle_diagnostics = { "toggle", "diagnostics" },
-  toggle_number = { "toggle", "number" },
   fg = "ui",
 }
 
+-- Metatable to provide lazy loading of utility modules and LazyUtil functions
 setmetatable(M, {
   __index = function(t, k)
+    -- First check if function exists in LazyUtil
     if LazyUtil[k] then
       return LazyUtil[k]
     end
+    
+    -- Handle deprecated function names
     local dep = deprecated[k]
     if dep then
       local mod = type(dep) == "table" and dep[1] or dep
@@ -43,16 +39,20 @@ setmetatable(M, {
       t[mod] = require("util." .. mod) -- load here to prevent loops
       return t[mod][key]
     end
+    
+    -- Lazy load utility modules
     ---@diagnostic disable-next-line: no-unknown
     t[k] = require("util." .. k)
     return t[k]
   end,
 })
 
+-- Check if running on Windows
 function M.is_win()
   return vim.loop.os_uname().sysname:find("Windows") ~= nil
 end
 
+-- Check if a plugin is available in the lazy.nvim spec
 ---@param plugin string
 function M.has(plugin)
   return require("lazy.core.config").spec.plugins[plugin] ~= nil
@@ -78,9 +78,10 @@ function M.opts(name)
   return Plugin.values(plugin, "opts", false)
 end
 
+-- Show deprecation warning for old function usage
 function M.deprecate(old, new)
   M.warn(("`%s` is deprecated. Please use `%s` instead"):format(old, new), {
-    title = "LazyVim",
+    title = "Neovim Config",
     once = true,
     stacktrace = true,
     stacklevel = 6,

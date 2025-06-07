@@ -1,4 +1,4 @@
--- Derived from LazyVim --
+-- Default configuration and icons
 
 local M = {}
 

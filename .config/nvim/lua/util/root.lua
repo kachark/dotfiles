@@ -1,6 +1,9 @@
+-- Root directory detection utilities
+-- Finds project root based on LSP workspace, git, patterns, or cwd
+
 local Util = require("util")
 
----@class lazyvim.util.root
+---@class util.root
 ---@overload fun(): string
 local M = setmetatable({}, {
   __call = function(m)
@@ -8,23 +11,27 @@ local M = setmetatable({}, {
   end,
 })
 
----@class LazyRoot
+---@class ProjectRoot
 ---@field paths string[]
----@field spec LazyRootSpec
+---@field spec RootSpec
 
----@alias LazyRootFn fun(buf: number): (string|string[])
+---@alias RootFn fun(buf: number): (string|string[])
 
----@alias LazyRootSpec string|string[]|LazyRootFn
+---@alias RootSpec string|string[]|RootFn
 
----@type LazyRootSpec[]
+-- Default root detection specs: try LSP workspace, then git/lua markers, then cwd
+---@type RootSpec[]
 M.spec = { "lsp", { ".git", "lua" }, "cwd" }
 
+-- Root detection functions for different strategies
 M.detectors = {}
 
+-- Detector: use current working directory as root
 function M.detectors.cwd()
   return { vim.loop.cwd() }
 end
 
+-- Detector: use LSP workspace folders as root candidates
 function M.detectors.lsp(buf)
   local bufpath = M.bufpath(buf)
   if not bufpath then
@@ -45,7 +52,8 @@ function M.detectors.lsp(buf)
   end, roots)
 end
 
----@param patterns string[]|string
+-- Detector: find root by searching upward for file patterns
+---@param patterns string[]|string File patterns to search for
 function M.detectors.pattern(buf, patterns)
   patterns = type(patterns) == "string" and { patterns } or patterns
   local path = M.bufpath(buf) or vim.loop.cwd()
@@ -53,14 +61,17 @@ function M.detectors.pattern(buf, patterns)
   return pattern and { vim.fs.dirname(pattern) } or {}
 end
 
+-- Get the real path of a buffer
 function M.bufpath(buf)
   return M.realpath(vim.api.nvim_buf_get_name(assert(buf)))
 end
 
+-- Get the current working directory with real path resolution
 function M.cwd()
   return M.realpath(vim.loop.cwd()) or ""
 end
 
+-- Resolve path to real path and normalize
 function M.realpath(path)
   if path == "" or path == nil then
     return nil
@@ -69,8 +80,9 @@ function M.realpath(path)
   return Util.norm(path)
 end
 
----@param spec LazyRootSpec
----@return LazyRootFn
+-- Convert a root spec into a detector function
+---@param spec RootSpec
+---@return RootFn
 function M.resolve(spec)
   if M.detectors[spec] then
     return M.detectors[spec]
@@ -82,13 +94,14 @@ function M.resolve(spec)
   end
 end
 
----@param opts? { buf?: number, spec?: LazyRootSpec[], all?: boolean }
+-- Detect project roots using configured specs
+---@param opts? { buf?: number, spec?: RootSpec[], all?: boolean }
 function M.detect(opts)
   opts = opts or {}
   opts.spec = opts.spec or type(vim.g.root_spec) == "table" and vim.g.root_spec or M.spec
   opts.buf = (opts.buf == nil or opts.buf == 0) and vim.api.nvim_get_current_buf() or opts.buf
 
-  local ret = {} ---@type LazyRoot[]
+  local ret = {} ---@type ProjectRoot[]
   for _, spec in ipairs(opts.spec) do
     local paths = M.resolve(spec)(opts.buf)
     paths = paths or {}
@@ -113,6 +126,7 @@ function M.detect(opts)
   return ret
 end
 
+-- Show information about detected roots (for debugging)
 function M.info()
   local spec = type(vim.g.root_spec) == "table" and vim.g.root_spec or M.spec
 
@@ -132,31 +146,31 @@ function M.info()
   lines[#lines + 1] = "```lua"
   lines[#lines + 1] = "vim.g.root_spec = " .. vim.inspect(spec)
   lines[#lines + 1] = "```"
-  require("util").info(lines, { title = "LazyVim Roots" })
+  require("util").info(lines, { title = "Project Roots" })
   return roots[1] and roots[1].paths[1] or vim.loop.cwd()
 end
 
 ---@type table<number, string>
 M.cache = {}
 
+-- Set up root detection with autocmds and user command
 function M.setup()
-  vim.api.nvim_create_user_command("LazyRoot", function()
+  vim.api.nvim_create_user_command("ProjectRoot", function()
     Util.root.info()
-  end, { desc = "LazyVim roots for the current buffer" })
+  end, { desc = "Show project roots for the current buffer" })
 
   vim.api.nvim_create_autocmd({ "LspAttach", "BufWritePost" }, {
-    group = vim.api.nvim_create_augroup("lazyvim_root_cache", { clear = true }),
+    group = vim.api.nvim_create_augroup("project_root_cache", { clear = true }),
     callback = function(event)
       M.cache[event.buf] = nil
     end,
   })
 end
 
--- returns the root directory based on:
--- * lsp workspace folders
--- * lsp root_dir
--- * root pattern of filename of the current buffer
--- * root pattern of cwd
+-- Get the project root directory using the following priority:
+-- 1. LSP workspace folders
+-- 2. File patterns (.git, lua, etc.)
+-- 3. Current working directory
 ---@param opts? {normalize?:boolean}
 ---@return string
 function M.get(opts)
@@ -173,6 +187,7 @@ function M.get(opts)
   return Util.is_win() and ret:gsub("/", "\\") or ret
 end
 
+-- Create a prettified path display (placeholder function)
 ---@param opts? {hl_last?: string}
 function M.pretty_path(opts)
   return ""

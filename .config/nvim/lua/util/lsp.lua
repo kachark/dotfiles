@@ -1,10 +1,15 @@
+-- LSP utility functions
+-- Provides helpers for LSP client management, formatting, and file operations
+
 local Util = require("util")
 
----@class lazyvim.util.lsp
+---@class util.lsp
 local M = {}
 
 ---@alias lsp.Client.filter {id?: number, bufnr?: number, name?: string, method?: string, filter?:fun(client: lsp.Client):boolean}
 
+-- Get LSP clients with optional filtering
+-- Handles both new vim.lsp.get_clients() and deprecated get_active_clients()
 ---@param opts? lsp.Client.filter
 function M.get_clients(opts)
   local ret = {} ---@type lsp.Client[]
@@ -23,6 +28,7 @@ function M.get_clients(opts)
   return opts and opts.filter and vim.tbl_filter(opts.filter, ret) or ret
 end
 
+-- Set up autocmd to run callback when LSP attaches to buffer
 ---@param on_attach fun(client, buffer)
 function M.on_attach(on_attach)
   vim.api.nvim_create_autocmd("LspAttach", {
@@ -34,8 +40,9 @@ function M.on_attach(on_attach)
   })
 end
 
----@param from string
----@param to string
+-- Handle file renames using LSP workspace/willRenameFiles capability
+---@param from string Source file path
+---@param to string Destination file path
 function M.on_rename(from, to)
   local clients = M.get_clients()
   for _, client in ipairs(clients) do
@@ -56,14 +63,16 @@ function M.on_rename(from, to)
   end
 end
 
+-- Get lspconfig configuration for a server
 ---@return _.lspconfig.options
 function M.get_config(server)
   local configs = require("lspconfig.configs")
   return rawget(configs, server)
 end
 
----@param server string
----@param cond fun( root_dir, config): boolean
+-- Conditionally disable an LSP server based on root directory or config
+---@param server string Server name
+---@param cond fun( root_dir, config): boolean Condition function
 function M.disable(server, cond)
   local util = require("lspconfig.util")
   local def = M.get_config(server)
@@ -75,6 +84,7 @@ function M.disable(server, cond)
   end)
 end
 
+-- Create a formatter configuration for LSP formatting
 ---@param opts? LazyFormatter| {filter?: (string|lsp.Client.filter)}
 function M.formatter(opts)
   opts = opts or {}
@@ -107,6 +117,7 @@ end
 
 ---@alias lsp.Client.format {timeout_ms?: number, format_options?: table} | lsp.Client.filter
 
+-- Format current buffer using LSP or conform.nvim (if available)
 ---@param opts? lsp.Client.format
 function M.format(opts)
   opts = vim.tbl_deep_extend("force", {}, opts or {}, require("util").opts("nvim-lspconfig").format or {})

@@ -1,27 +1,38 @@
+-- Lualine utility functions
+-- Provides custom components and formatters for lualine statusline
+
 local Util = require("util")
 
----@class lazyvim.util.lualine
+---@class util.lualine
 local M = {}
 
-function M.cmp_source(name, icon)
+-- Create a lualine component that shows blink.cmp source status
+function M.blink_source(name, icon)
   local started = false
+  
   local function status()
-    if not package.loaded["cmp"] then
+    if not package.loaded["blink.cmp"] then
       return
     end
-    for _, s in ipairs(require("cmp").core.sources) do
-      if s.name == name then
-        if s.source:is_available() then
+    
+    -- Check if blink.cmp is available and get source status
+    local ok, blink = pcall(require, "blink.cmp")
+    if not ok then
+      return
+    end
+    
+    -- For blink.cmp, we check if the source is in the enabled sources
+    local config = require("blink.cmp.config")
+    if config and config.sources and config.sources.default then
+      for _, source in ipairs(config.sources.default) do
+        if source == name then
           started = true
-        else
-          return started and "error" or nil
+          return "ok"
         end
-        if s.status == s.SourceStatus.FETCHING then
-          return "pending"
-        end
-        return "ok"
       end
     end
+    
+    return started and "error" or nil
   end
 
   local colors = {
@@ -32,7 +43,7 @@ function M.cmp_source(name, icon)
 
   return {
     function()
-      return icon or require("config").icons.kinds[name:sub(1, 1):upper() .. name:sub(2)]
+      return icon or require("defaults").icons.kinds[name:sub(1, 1):upper() .. name:sub(2)]
     end,
     cond = function()
       return status() ~= nil
@@ -43,10 +54,11 @@ function M.cmp_source(name, icon)
   }
 end
 
----@param component any
----@param text string
----@param hl_group? string
----@return string
+-- Format text with highlight group for lualine component
+---@param component any Lualine component instance
+---@param text string Text to format
+---@param hl_group? string Highlight group name
+---@return string Formatted text with highlight
 function M.format(component, text, hl_group)
   if not hl_group then
     return text
@@ -62,6 +74,8 @@ function M.format(component, text, hl_group)
   return component:format_hl(lualine_hl_group) .. text .. component:get_default_hl()
 end
 
+-- Create a lualine component that shows a prettified file path
+-- Shortens long paths and highlights modified files
 ---@param opts? {relative: "cwd"|"root", modified_hl: string?}
 function M.pretty_path(opts)
   opts = vim.tbl_extend("force", {
@@ -98,6 +112,8 @@ function M.pretty_path(opts)
   end
 end
 
+-- Create a lualine component that shows the project root directory
+-- Displays different information based on relationship between cwd and root
 ---@param opts? {cwd:false, subdirectory: true, parent: true, other: true, icon?:string}
 function M.root_dir(opts)
   opts = vim.tbl_extend("force", {

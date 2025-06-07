@@ -2,7 +2,7 @@ local Util = require("util")
 
 M = {}
 
--- FROM LAZYVIM, with my own modifications
+-- Lualine statusline configuration with custom components
 -- uses utilities from /util
 function M.setup()
 
