@@ -1,4 +1,3 @@
-
 local Util = require("util")
 
 M = {}
@@ -89,6 +88,7 @@ function M.setup()
       },
     },
     -- extensions = { "neo-tree", "lazy" },
+    extensions = { "fzf" },
   }
 
   lualine.setup(config)

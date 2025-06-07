@@ -8,6 +8,16 @@ g.mapleader = ','
 -- Set LSP log level --
 vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
 vim.lsp.inlay_hint.enable()
+vim.diagnostic.config({
+  -- Use the default configuration
+  virtual_lines = true
+
+  -- Alternatively, customize specific options
+  -- virtual_lines = {
+  --  -- Only show virtual line diagnostics for the current cursor line
+  --  current_line = true,
+  -- },
+})
 -- vim.opt.guicursor="n-v-c:blinkon10-blinkoff10"
 
 --------- Settings ---------
@@ -27,7 +37,6 @@ require('plugins.blink').setup()
 require('plugins.statusline').setup()
 require('plugins.treesitter').setup()
 require('plugins.fzf').setup()
--- require('plugins.dap').setup()
 require('plugins.gitsigns').setup()
 
 --- devicons ---

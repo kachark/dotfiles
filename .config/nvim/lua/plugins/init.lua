@@ -86,17 +86,6 @@ return require("lazy").setup({
     lazy = true,
   },
 
-  -- **************************
-  -- Debugger
-  -- **************************
-  {
-    'rcarriga/nvim-dap-ui',
-    dependencies = {
-      'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio'
-    },
-    -- setup later by config/dap.lua
-    lazy = true,
-  },
 
   -- **************************
   -- LSP
@@ -173,33 +162,6 @@ return require("lazy").setup({
     -- opts = {},
   },
 
-  -- **************************
-  -- Completion engine
-  -- **************************
-  {
-    'hrsh7th/nvim-cmp',
-    version = false,
-    dependencies = {
-      'hrsh7th/cmp-nvim-lsp', -- source for lsp
-      'hrsh7th/cmp-nvim-lua', -- source for lua
-      'hrsh7th/cmp-buffer', -- source for buffer
-      "saadparwaiz1/cmp_luasnip",
-    },
-    -- setup later in config/lsp.lua
-    lazy = true,
-  },
-
-  {
-    "L3MON4D3/LuaSnip",
-    -- follow latest release.
-    version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-    -- install jsregexp (optional!).
-    build = "make install_jsregexp",
-    opts = {
-      history = true,
-      delete_check_events = "TextChanged",
-    }
-  },
 
   {
     'saghen/blink.cmp',

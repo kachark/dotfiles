@@ -9,10 +9,6 @@ function ToggleInlayHints()
     print("Inlay hints disabled")
   end
 end
--- set_keymap('n', '<leader>ih', '<cmd>lua ToggleInlayHints()<CR>')
-local on_attach = function(client, bufnr)
-  vim.lsp.inlay_hint.enable(inlay_hints_enabled)
-end
 
 M = {}
 
@@ -27,6 +23,7 @@ function M.setup()
 
   -- LSP SETTINGS
   function on_attach(client, bufnr)
+    vim.lsp.inlay_hint.enable(inlay_hints_enabled)
 
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
       vim.lsp.handlers.hover, {

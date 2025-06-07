@@ -13,6 +13,7 @@ return {
       wk.add({
         { "<leader>cR" , function() vim.cmd.RustLsp("codeAction") end, desc = "Code Action" },
         { "<leader>dr" , function() vim.cmd.RustLsp("debuggables") end, desc = "Code Debuggables" },
+        { "<leader>ih" , "<cmd>lua ToggleInlayHints()<cr>", desc = "Toggle LSP Inlay Hints" },
       },
       {
         mode = { "n" }
