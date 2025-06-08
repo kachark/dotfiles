@@ -1,16 +1,12 @@
 
-local cmd = vim.cmd
-local fn = vim.fn
-local g = vim.g
-
-g.mapleader = ','
+vim.g.mapleader = ','
 
 -- Set LSP log level --
 vim.lsp.set_log_level(vim.lsp.log_levels.OFF)
 vim.lsp.inlay_hint.enable()
 vim.diagnostic.config({
   -- Use the default configuration
-  virtual_lines = true
+  -- virtual_lines = true
 
   -- Alternatively, customize specific options
   -- virtual_lines = {
@@ -26,6 +22,9 @@ require('defaults').setup() -- icons, styling
 
 ---------- Plugins ----------
 require('plugins')
+
+--------- Colorscheme ---------
+require('colorscheme').setup()
 
 --------- Key Remaps ---------
 require('plugins.tools.whichkey').setup()
@@ -61,7 +60,7 @@ require'nvim-web-devicons'.setup {
 -- cmd 'BufEnter * lua require'completion'.on_attach()' -- use completion-nvim on every buffer
 -- vim.api.nvim_command([[autocmd BufEnter * lua require'completion'.on_attach()]])
 
-cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'  -- disabled in visual mode
+vim.cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'  -- disabled in visual mode
 
 vim.api.nvim_command([[command! Config execute ":e ~/.config/nvim/init.lua"]])
 -- vim.api.nvim_command([[command! Reload execute ":source ~/.config/nvim/init.lua"]])

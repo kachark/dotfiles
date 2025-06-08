@@ -23,13 +23,13 @@ return require("lazy").setup({
   -- **************************
   'nvim-lua/plenary.nvim',
   'mhinz/vim-startify',
-  -- Needed for svelte commenting (not support in Nvim 0.10)
-  {
-    'numToStr/Comment.nvim',
-    config = function()
-      require('Comment').setup()
-    end,
-  },
+  -- -- Needed for svelte commenting (not support in Nvim 0.10)
+  -- {
+  --   'numToStr/Comment.nvim',
+  --   config = function()
+  --     require('Comment').setup()
+  --   end,
+  -- },
   'tpope/vim-repeat',
   {
     "kylechui/nvim-surround",
@@ -47,6 +47,20 @@ return require("lazy").setup({
     config = function()
       require('mini.pairs').setup({})
     end
+  },
+  {
+    "echasnovski/mini.icons",
+    opts = {},
+    lazy = true,
+    specs = {
+      { "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
+    },
+    init = function()
+      package.preload["nvim-web-devicons"] = function()
+        require("mini.icons").mock_nvim_web_devicons()
+        return package.loaded["nvim-web-devicons"]
+      end
+    end,
   },
 
   -- **************************
@@ -286,9 +300,6 @@ return require("lazy").setup({
     -- Make colorscheme available at plugin load-time
     lazy = false,
     priority = 1000,
-    config = function()
-      require('colorscheme').setup()
-    end,
   },
   'luisiacc/gruvbox-baby',
   {
