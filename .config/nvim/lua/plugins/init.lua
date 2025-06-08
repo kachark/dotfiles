@@ -43,15 +43,22 @@ return require("lazy").setup({
   },
   {
     'echasnovski/mini.pairs',
-    version = '*',
+    version = false,
     config = function()
       require('mini.pairs').setup({})
-    end
+    end,
+    lazy = true,
   },
   {
     "echasnovski/mini.icons",
-    opts = {},
-    lazy = true,
+    opts = {
+      -- Add custom icon overrides
+      extension = {
+        zsh = { glyph = "", hl = "MiniIconsGreen" },
+      },
+    },
+    lazy = false,
+    priority = 1000,
     specs = {
       { "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
     },
@@ -124,9 +131,6 @@ return require("lazy").setup({
   -- **************************
   {
     "folke/trouble.nvim",
-    dependencies = {
-      "kyazdani42/nvim-web-devicons"
-    },
     config = function()
       require("trouble").setup {
         -- your configuration comes here
@@ -153,10 +157,6 @@ return require("lazy").setup({
   -- **************************
   {
     'ibhagwan/fzf-lua',
-    -- optional for icon support
-    dependencies = {
-      'kyazdani42/nvim-web-devicons'
-    },
   },
 
   -- **************************
@@ -191,7 +191,6 @@ return require("lazy").setup({
       'rafamadriz/friendly-snippets',
       -- optional: icons in completion menu
       'onsails/lspkind.nvim',
-      'kyazdani42/nvim-web-devicons',
     },
 
     -- use a release tag to download pre-built binaries
@@ -210,9 +209,6 @@ return require("lazy").setup({
   -- **************************
   {
     'nvim-lualine/lualine.nvim',
-    dependencies = {
-      'kyazdani42/nvim-web-devicons',
-    },
     -- setup later in config/statusline.lua
     lazy = true,
   },
