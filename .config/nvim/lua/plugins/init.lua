@@ -58,14 +58,21 @@ return require("lazy").setup({
     lazy = false,
     ---@type snacks.Config
     opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
+      -- Enable improved input/select UI (replaces dressing.nvim)
+      input = { 
+        enabled = true,
+        -- Enhanced input styling
+        win = {
+          relative = "cursor",
+          row = -3,
+          col = 0,
+        },
+      },
+      -- Keep other features disabled for minimal setup
       bigfile = { enabled = false },
       dashboard = { enabled = false },
       explorer = { enabled = false },
       indent = { enabled = false },
-      input = { enabled = true },
       picker = { enabled = false },
       notifier = { enabled = false },
       quickfile = { enabled = false },
