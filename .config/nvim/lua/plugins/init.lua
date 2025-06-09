@@ -22,6 +22,7 @@ return require("lazy").setup({
   -- Necessary
   -- **************************
   'nvim-lua/plenary.nvim',
+  'nvim-lua/popup.nvim',
   'mhinz/vim-startify',
   -- -- Needed for svelte commenting (not support in Nvim 0.10)
   -- {
@@ -80,7 +81,7 @@ return require("lazy").setup({
     ---@type snacks.Config
     opts = {
       -- Enable improved input/select UI (replaces dressing.nvim)
-      input = { 
+      input = {
         enabled = true,
         -- Enhanced input styling
         win = {
@@ -110,7 +111,6 @@ return require("lazy").setup({
   'tpope/vim-fugitive',
   {
     'lewis6991/gitsigns.nvim',
-    -- setup later in config/gitsigns.lua
     lazy = true,
   },
 
@@ -120,11 +120,15 @@ return require("lazy").setup({
   -- **************************
   {
     'neovim/nvim-lspconfig',
-    -- setup later by my config/lsp.lua
     lazy = true,
   },
-  'ray-x/lsp_signature.nvim',
-  'nvim-lua/popup.nvim',
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "InsertEnter",
+    opts = {
+      -- cfg options
+    },
+  },
 
   -- **************************
   -- LSP diagnostic popups
@@ -153,10 +157,28 @@ return require("lazy").setup({
   },
 
   -- **************************
-  -- Buffer/file/grep
+  -- Buffer/file/grep + find-and-replace
   -- **************************
   {
     'ibhagwan/fzf-lua',
+  },
+  {
+    'MagicDuck/grug-far.nvim',
+    -- Note (lazy loading): grug-far.lua defers all it's requires so it's lazy by default
+    -- additional lazy config to defer loading is not really needed...
+    config = function()
+      -- optional setup call to override plugin options
+      -- alternatively you can set options with vim.g.grug_far = { ... }
+      require('grug-far').setup({
+        -- options, see Configuration section below
+        -- there are no required options atm
+      });
+    end
+  },
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" }
   },
 
   -- **************************
@@ -183,39 +205,13 @@ return require("lazy").setup({
     -- opts = {},
   },
 
-
-  {
-    'saghen/blink.cmp',
-    dependencies = {
-      -- optional: provides snippets for the snippet source
-      'rafamadriz/friendly-snippets',
-      -- optional: icons in completion menu
-      'onsails/lspkind.nvim',
-    },
-
-    -- use a release tag to download pre-built binaries
-    version = '*',
-    -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-    -- build = 'cargo build --release',
-    -- If you use nix, you can build from source using latest nightly rust with:
-    -- build = 'nix run .#build-plugin',
-
-    -- setup later in config/blink.lua
-    lazy = true,
-  },
-
   -- **************************
-  -- Statusline
+  -- UI
   -- **************************
   {
     'nvim-lualine/lualine.nvim',
-    -- setup later in config/statusline.lua
     lazy = true,
   },
-
-  -- **************************
-  -- Scrollbar
-  -- **************************
   'petertriho/nvim-scrollbar',
 
   -- **************************
@@ -223,7 +219,6 @@ return require("lazy").setup({
   -- **************************
   {
     'folke/which-key.nvim',
-    -- setup later in config/whichkey.lua
     lazy = true,
   },
 
@@ -254,20 +249,26 @@ return require("lazy").setup({
     -- setup later in config/treesitter.lua
     lazy = true,
   },
-  -- {
-  --   'RRethy/vim-illuminate',
-  --   config = function()
-  --     require('illuminate').configure({
-  --       opts = {
-  --         delay = 200,
-  --         large_file_cutoff = 2000,
-  --         large_file_overrides = {
-  --           providers = { "lsp" },
-  --         },
-  --       },
-  --     })
-  --   end
-  -- },
+  {
+    'saghen/blink.cmp',
+    dependencies = {
+      -- optional: provides snippets for the snippet source
+      'rafamadriz/friendly-snippets',
+      -- optional: icons in completion menu
+      'onsails/lspkind.nvim',
+    },
+
+    -- use a release tag to download pre-built binaries
+    version = '*',
+    -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+    -- build = 'cargo build --release',
+    -- If you use nix, you can build from source using latest nightly rust with:
+    -- build = 'nix run .#build-plugin',
+
+    -- setup later in config/blink.lua
+    lazy = true,
+  },
+
   {
     'brenoprata10/nvim-highlight-colors',
     config = function()
@@ -293,7 +294,6 @@ return require("lazy").setup({
   {
     'catppuccin/nvim',
     name = 'catppuccin',
-    -- Make colorscheme available at plugin load-time
     lazy = false,
     priority = 1000,
   },

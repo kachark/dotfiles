@@ -5,6 +5,19 @@ function M.setup()
 
   local wk = require("which-key")
 
+  -- Setup Harpoon with extensions
+  local harpoon = require('harpoon')
+  harpoon:setup({
+    settings = {
+      save_on_toggle = false,
+      sync_on_ui_close = false,
+    }
+  })
+  
+  local harpoon_extensions = require("harpoon.extensions")
+  harpoon:extend(harpoon_extensions.builtins.highlight_current_file())
+  harpoon:extend(harpoon_extensions.builtins.navigate_with_number())
+
   local opts = {
     mode = {'n', 'v'}, -- Normal mode, Visual mode
     prefix = "",
@@ -29,6 +42,7 @@ function M.setup()
     { "<leader>fh", "<cmd>FzfLua btags<cr>", desc = "Find Buffer Tags" },
     -- { "<leader>fa", "<cmd>FzfLua grep_project<cr>", desc = "Grep Project" },
     { "<leader>fa", "<cmd>FzfLua live_grep_glob<cr>", desc = "Grep Project" },
+    { "<leader>fs", "<cmd>FzfLua lgrep_curbuf<cr>", desc = "Grep Buffer" },
     { "<leader>fs", "<cmd>FzfLua lgrep_curbuf<cr>", desc = "Grep Buffer" },
 
     { "<leader>l", group = "+Language Server" },
@@ -65,6 +79,18 @@ function M.setup()
     { "<leader>xr", "<cmd>lua require'dap'.repl.open()<cr>", desc = "Open REPL" },
     { "<leader>xl", "<cmd>lua require'dap'.run_last()<cr>", desc = "Run Last" },
     { "<leader>xu", "<cmd>lua require'dapui'.toggle()<cr>", desc = "Toggle UI" },
+
+    { "<leader>.", group = "+MarkedBufs" },
+    -- Harpoon
+    { "<leader>.a", function() harpoon:list():add() end, desc = "Mark Buffer" },
+    { "<leader>.f", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end, desc = "List Marked Buffers" },
+    { "<leader>.q", function() harpoon:list():select(1) end, desc = "Mark (1)" },
+    { "<leader>.w", function() harpoon:list():select(2) end, desc = "Mark (2)" },
+    { "<leader>.e", function() harpoon:list():select(3) end, desc = "Mark (3)" },
+    { "<leader>.r", function() harpoon:list():select(4) end, desc = "Mark (4)" },
+    { "<leader>.d", function() harpoon:list():next() end, desc = "Next Mark" },
+    { "<leader>.s", function() harpoon:list():prev() end, desc = "Previous Mark" },
+
   }
 
   wk.add(mappings, opts)

@@ -17,6 +17,7 @@ function M.setup()
   -- plugin imports
   local lsp = require('lspconfig')
   local ts_tools = require('typescript-tools')
+  local lsp_signature = require('lsp_signature')
 
   -- Add additional LSP capabilities via blink.cmp completion engine
   local capabilities = require('blink.cmp').get_lsp_capabilities()
@@ -40,6 +41,9 @@ function M.setup()
     {
       mode = { "n" }
     })
+
+    -- enable lsp_signature
+    lsp_signature.on_attach({}, bufnr)
 
   end
 
