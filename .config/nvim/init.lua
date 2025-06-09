@@ -17,7 +17,7 @@ vim.diagnostic.config({
 -- vim.opt.guicursor="n-v-c:blinkon10-blinkoff10"
 
 --------- Settings ---------
-require('settings') -- options, autocmds
+require('settings').setup() -- options, autocmds
 require('defaults').setup() -- icons, styling
 
 ---------- Plugins ----------
@@ -37,17 +37,18 @@ require('plugins.core.treesitter').setup()
 require('plugins.tools.fzf').setup()
 require('plugins.ui.gitsigns').setup()
 
-
-
 --------- Commands ---------
 
--- completion.nvim
--- cmd 'BufEnter * lua require'completion'.on_attach()' -- use completion-nvim on every buffer
--- vim.api.nvim_command([[autocmd BufEnter * lua require'completion'.on_attach()]])
+-- Highlight yanked text (disabled in visual mode)
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function()
+    vim.highlight.on_yank { on_visual = false }
+  end,
+})
 
-vim.cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'  -- disabled in visual mode
-
-vim.api.nvim_command([[command! Config execute ":e ~/.config/nvim/init.lua"]])
--- vim.api.nvim_command([[command! Reload execute ":source ~/.config/nvim/init.lua"]])
+-- Custom command to open config
+vim.api.nvim_create_user_command("Config", function()
+  vim.cmd("e ~/.config/nvim/init.lua")
+end, { desc = "Open Neovim configuration" })
 
 

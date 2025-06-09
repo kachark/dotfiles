@@ -19,6 +19,7 @@ function M.setup()
     { "<leader><leader>c", "<cmd>noh<cr>", desc = "Clear Highlights"},
     { "<leader><leader>d", "<cmd>bd<cr>", desc = "Close Current Buffer"},
     { "<leader><leader>y", '"+y', desc = "Yank To + Register"},
+    { "<leader><leader>y", '"+y', desc = "Yank To + Register", mode = "v"},
 
     { "<leader>f", group = "+Find" },
     -- -- FZF

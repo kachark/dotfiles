@@ -104,7 +104,7 @@ function M.pretty_path(opts)
       parts = { parts[1], "…", parts[#parts - 1], parts[#parts] }
     end
 
-    if opts.modified_hl and vim.bo.modified then
+    if opts.modified_hl and vim.bo[0].modified then
       parts[#parts] = M.format(self, parts[#parts], opts.modified_hl)
     end
 
