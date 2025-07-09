@@ -22,7 +22,7 @@ function M.setup()
   -- Add additional LSP capabilities via blink.cmp completion engine
   local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-  -- LSP SETTINGS
+  -- Handler for dynamic LSP configuration
   function on_attach(client, bufnr)
     vim.lsp.inlay_hint.enable(inlay_hints_enabled)
 
@@ -47,34 +47,37 @@ function M.setup()
 
   end
 
-  -- lsp specific settings --
+  -- Static LSP configuration --
 
-  -- lua
-  lsp.lua_ls.setup{}
+  -- Lua
+  vim.lsp.config('lua_ls', {
+    capabilities = capabilities,
+    on_attach = on_attach,
+  })
 
   -- C/C++
-  lsp.clangd.setup{
-    on_attach=on_attach,
+  vim.lsp.config('clangd', {
     capabilities = capabilities,
+    on_attach = on_attach,
     -- cmd = {
     --   "clangd",
     --   "--background-index",
     -- }
-  }
+  })
 
   -- Python
   -- root_dir is where the LSP server will start: here at the project root otherwise in current folder
-  lsp.pyright.setup{
-    on_attach = on_attach,
+  vim.lsp.config('pyright', {
     capabilities = capabilities,
+    on_attach = on_attach,
     root_dir = lsp.util.root_pattern('.git', vim.fn.getcwd())
-  }
+  })
 
   -- Tex
-  lsp.texlab.setup({
-    on_attach=on_attach,
+  vim.lsp.config('texlab', {
     capabilities = capabilities,
-    cmd={"texlab"},
+    on_attach = on_attach,
+    cmd = {"texlab"},
     filetypes = { "tex", "bib" },
     root_dir = function(fname)
           return lsp.util.root_pattern '.latexmkrc'(fname) or lsp.util.find_git_ancestor(fname)
@@ -109,84 +112,36 @@ function M.setup()
   })
 
   -- Javascript/Typescript
-  lsp.ts_ls.setup({
-    on_attach = on_attach,
+  vim.lsp.config('ts_ls', {
     capabilities = capabilities,
+    on_attach = on_attach,
   })
 
-  -- ts_tools.setup({
-  --   on_attach = on_attach,
-  --   capabilities = capabilities,
-  --   settings = {
-  --     -- spawn additional tsserver instance to calculate diagnostics on it
-  --     separate_diagnostic_server = true,
-  --     -- "change"|"insert_leave" determine when the client asks the server about diagnostic
-  --     publish_diagnostic_on = "insert_leave",
-  --     -- specify a list of plugins to load by tsserver, e.g., for support `styled-components`
-  --     -- (see 💅 `styled-components` support section)
-  --     tsserver_plugins = {},
-  --     -- described below
-  --     tsserver_format_options = {},
-  --     tsserver_file_preferences = {},
-  --   },
-  -- })
-
-  -- Svelte (Web Framework)
-  lsp.svelte.setup({
-    on_attach = on_attach,
+  -- Svelte
+  vim.lsp.config('svelte', {
     capabilities = capabilities,
-  })
-
-  -- TailwindCSS (Styling)
-  lsp.tailwindcss.setup({
     on_attach = on_attach,
-    capabilities = capabilities
   })
 
-  -- -- Rust (This is the lspconfig barebones setup for Rust. Now using rustaceanvim instead)
-  -- lsp.rust_analyzer.setup({
-  --   on_attach=on_attach,
-  --   capabilities = capabilities,
-  --   -- Server-specific settings. See `:help lspconfig-setup`
-  --   settings = {
-  --     ["rust-analyzer"] = {
-  --       cargo = {
-  --         allFeatures = true,
-  --       },
-  --       imports = {
-  --         group = {
-  --           enable = false,
-  --         },
-  --       },
-  --       completion = {
-  --         postfix = {
-  --           enable = false,
-  --         },
-  --       },
-  --     },
-  --   },
-  --   -- commands to tell LSPConfig how to run rust-analyzer
-  --   -- cmd = {
-  --   --   "rustup", "run", "stable", "rust-analyzer",
-  --   -- },
-  -- })
+  -- TailwindCSS
+  vim.lsp.config('tailwindcss', {
+    capabilities = capabilities,
+    on_attach = on_attach,
+  })
 
-  -- -- NOTE: temporary until rust-analyzer + neovim server cancelled error -32802 resolved
-  -- -- https://github.com/neovim/neovim/issues/30985
-  -- for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
-  --   local default_diagnostic_handler = vim.lsp.handlers[method]
-  --   vim.lsp.handlers[method] = function(err, result, context, config)
-  --       if err ~= nil and err.code == -32802 then
-  --           return
-  --       end
-  --       return default_diagnostic_handler(err, result, context, config)
-  --   end
-  -- end
-
-  -- -- Rust using rustaceanvim
+  -- Rust using rustaceanvim
   local rustaceanvim_config = require('plugins.lang.rust')
-  rustaceanvim_config.server.capabilities = vim.lsp.protocol.make_client_capabilities();
+  rustaceanvim_config.server.capabilities = capabilities
   vim.g.rustaceanvim = rustaceanvim_config
+
+  -- Enable LSP servers
+  vim.lsp.enable('lua_ls')
+  vim.lsp.enable('clangd')
+  vim.lsp.enable('pyright')
+  vim.lsp.enable('texlab')
+  vim.lsp.enable('ts_ls')
+  vim.lsp.enable('svelte')
+  vim.lsp.enable('tailwindcss')
 
 end
 
