@@ -109,9 +109,6 @@ local colorschemes = {
   end,
 }
 
--- Current active colorscheme
-local current_theme = "catppuccin" -- Default theme
-
 -- Setup scrollbar colors to match active theme
 local function setup_scrollbar(colors)
   if not colors or vim.tbl_isempty(colors) then
@@ -135,10 +132,10 @@ local function setup_scrollbar(colors)
   })
 end
 
--- Apply a colorscheme
+-- Apply a colorscheme and color dependant plugins
 function M.set_colorscheme(name)
   local colors = {}
-  
+
   if colorschemes[name] then
     -- Custom colorscheme with setup function
     colors = colorschemes[name]()
@@ -153,64 +150,13 @@ function M.set_colorscheme(name)
     colors = {}
   end
 
-  current_theme = name
   setup_scrollbar(colors)
-  vim.notify("Switched to " .. name .. " theme", vim.log.levels.INFO)
-end
-
--- Cycle through available colorschemes
-function M.cycle_colorscheme()
-  local themes = M.list_colorschemes()
-  
-  local current_index = 1
-  for i, theme in ipairs(themes) do
-    if theme == current_theme then
-      current_index = i
-      break
-    end
-  end
-  
-  local next_index = current_index % #themes + 1
-  M.set_colorscheme(themes[next_index])
-end
-
--- Get list of available colorschemes (custom + built-in)
-function M.list_colorschemes()
-  local custom_themes = vim.tbl_keys(colorschemes)
-  
-  -- Get built-in colorschemes
-  local builtin_themes = vim.fn.getcompletion('', 'color')
-  
-  -- Combine and deduplicate
-  local all_themes = {}
-  local seen = {}
-  
-  -- Add custom themes first (they take priority)
-  for _, theme in ipairs(custom_themes) do
-    if not seen[theme] then
-      table.insert(all_themes, theme)
-      seen[theme] = true
-    end
-  end
-  
-  -- Add built-in themes
-  for _, theme in ipairs(builtin_themes) do
-    if not seen[theme] then
-      table.insert(all_themes, theme)
-      seen[theme] = true
-    end
-  end
-  
-  table.sort(all_themes)
-  return all_themes
 end
 
 
 -- Setup with default theme
 function M.setup()
-  M.set_colorscheme(current_theme)
+  M.set_colorscheme("catppuccin")
 end
-
-
 
 return M
