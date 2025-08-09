@@ -13,7 +13,7 @@ function M.setup()
       sync_on_ui_close = false,
     }
   })
-  
+
   local harpoon_extensions = require("harpoon.extensions")
   harpoon:extend(harpoon_extensions.builtins.highlight_current_file())
   harpoon:extend(harpoon_extensions.builtins.navigate_with_number())
@@ -33,15 +33,17 @@ function M.setup()
     { "<leader><leader>d", "<cmd>bd<cr>", desc = "Close Current Buffer"},
     { "<leader><leader>y", '"+y', desc = "Yank To + Register"},
     { "<leader><leader>y", '"+y', desc = "Yank To + Register", mode = "v"},
+    { "<leader><leader>w", "<cmd>Fyler<cr>", desc = "Open File Manager", mode = "n"},
+    { "<leader><leader>wd", "<cmd>lua require('fyler').open({ cwd=vim.fn.expand('%:p:h') })<cr>", desc = "Open File Manager At Buffer", mode = "n"},
 
     { "<leader>f", group = "+Find" },
     -- -- FZF
     { "<leader>ff", "<cmd>FzfLua files<cr>", desc = "Find File" },
     { "<leader>fg", "<cmd>FzfLua git_files<cr>", desc = "Find Git Files" },
     { "<leader>fb", "<cmd>FzfLua buffers<cr>", desc = "Find Buffers" },
-    { "<leader>fh", "<cmd>FzfLua btags<cr>", desc = "Find Buffer Tags" },
+    { "<leader>fd", "<cmd>lua require('fzf-lua').files({ cwd=vim.fn.expand('%:p:h') })<cr>", desc = "Find File From Buffer" },
     -- { "<leader>fa", "<cmd>FzfLua grep_project<cr>", desc = "Grep Project" },
-    { "<leader>fa", "<cmd>FzfLua live_grep_glob<cr>", desc = "Grep Project" },
+    { "<leader>fa", "<cmd>FzfLua live_grep<cr>", desc = "Grep Project" },
     { "<leader>fs", "<cmd>FzfLua lgrep_curbuf<cr>", desc = "Grep Buffer" },
     { "<leader>fs", "<cmd>FzfLua lgrep_curbuf<cr>", desc = "Grep Buffer" },
 

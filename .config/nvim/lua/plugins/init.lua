@@ -78,7 +78,6 @@ return require("lazy").setup({
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
-    ---@type snacks.Config
     opts = {
       -- Enable improved input/select UI (replaces dressing.nvim)
       input = {
@@ -180,6 +179,12 @@ return require("lazy").setup({
     branch = "harpoon2",
     dependencies = { "nvim-lua/plenary.nvim" }
   },
+  {
+    "A7Lavinraj/fyler.nvim",
+    dependencies = { "echasnovski/mini.icons" },
+    branch = "stable",
+    opts = {}
+  },
 
   -- **************************
   -- Language specific
@@ -228,7 +233,6 @@ return require("lazy").setup({
   {
     "folke/flash.nvim",
     event = "VeryLazy",
-    ---@type Flash.Config
     opts = {},
     -- stylua: ignore
     keys = {

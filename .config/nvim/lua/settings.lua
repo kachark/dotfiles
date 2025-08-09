@@ -3,6 +3,8 @@ local M = {}
 
 function M.setup()
   local opt = vim.opt
+
+  opt.title = true
   
   -- Indentation
   opt.expandtab = true                    -- Use spaces instead of tabs

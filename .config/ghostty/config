@@ -1,2 +1,3 @@
-theme = rebecca 
+theme = Berkshire
 font-family = Monaspace Neon
+keybind = shift+enter=text:\n
