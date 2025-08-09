@@ -45,7 +45,6 @@ function M.setup()
     -- { "<leader>fa", "<cmd>FzfLua grep_project<cr>", desc = "Grep Project" },
     { "<leader>fa", "<cmd>FzfLua live_grep<cr>", desc = "Grep Project" },
     { "<leader>fs", "<cmd>FzfLua lgrep_curbuf<cr>", desc = "Grep Buffer" },
-    { "<leader>fs", "<cmd>FzfLua lgrep_curbuf<cr>", desc = "Grep Buffer" },
 
     { "<leader>l", group = "+Language Server" },
     -- Trouble
