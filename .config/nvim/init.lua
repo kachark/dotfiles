@@ -36,6 +36,7 @@ require('plugins.ui.statusline').setup()
 require('plugins.core.treesitter').setup()
 require('plugins.tools.fzf').setup()
 require('plugins.ui.gitsigns').setup()
+require('plugins.ui.minifiles').setup()
 
 --------- Commands ---------
 

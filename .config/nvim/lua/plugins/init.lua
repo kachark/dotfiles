@@ -34,7 +34,7 @@ return require("lazy").setup({
   'tpope/vim-repeat',
   {
     "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    version = "^3.0.0", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
         require("nvim-surround").setup({
@@ -121,13 +121,6 @@ return require("lazy").setup({
     'neovim/nvim-lspconfig',
     lazy = true,
   },
-  {
-    "ray-x/lsp_signature.nvim",
-    event = "InsertEnter",
-    opts = {
-      -- cfg options
-    },
-  },
 
   -- **************************
   -- LSP diagnostic popups
@@ -143,7 +136,6 @@ return require("lazy").setup({
       }
     end,
   },
-
   {
     'folke/todo-comments.nvim',
     config = function()
@@ -152,6 +144,15 @@ return require("lazy").setup({
         -- or leave it empty to use the default settings
         -- refer to the configuration section below
       }
+    end,
+  },
+  {
+    'rachartier/tiny-inline-diagnostic.nvim',
+    event = 'VeryLazy',
+    priority = 1000,
+    config = function()
+      require('tiny-inline-diagnostic').setup()
+      vim.diagnostic.config({ virtual_text = false }) -- Disable Neovim's default virtual text diagnostics
     end,
   },
 
@@ -180,10 +181,8 @@ return require("lazy").setup({
     dependencies = { "nvim-lua/plenary.nvim" }
   },
   {
-    "A7Lavinraj/fyler.nvim",
-    dependencies = { "echasnovski/mini.icons" },
-    branch = "stable",
-    opts = {}
+    'nvim-mini/mini.files',
+    version = '*',
   },
 
   -- **************************

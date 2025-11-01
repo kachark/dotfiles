@@ -42,9 +42,11 @@ function M.setup()
     { "<leader>fg", "<cmd>FzfLua git_files<cr>", desc = "Find Git Files" },
     { "<leader>fb", "<cmd>FzfLua buffers<cr>", desc = "Find Buffers" },
     { "<leader>fd", "<cmd>lua require('fzf-lua').files({ cwd=vim.fn.expand('%:p:h') })<cr>", desc = "Find File From Buffer" },
-    -- { "<leader>fa", "<cmd>FzfLua grep_project<cr>", desc = "Grep Project" },
     { "<leader>fa", "<cmd>FzfLua live_grep<cr>", desc = "Grep Project" },
     { "<leader>fs", "<cmd>FzfLua lgrep_curbuf<cr>", desc = "Grep Buffer" },
+    { "<leader>fq", "<cmd>FzfLua lsp_document_symbol<cr>", desc = "Grep Buffer Symbols" },
+    { "<leader>fr", "<cmd>FzfLua resume<cr>", desc = "Resume Last Search" },
+    { "<leader>fh", "<cmd>FzfLua command_history<cr>", desc = "Grep Buffer" },
 
     { "<leader>l", group = "+Language Server" },
     -- Trouble
