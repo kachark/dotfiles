@@ -7,8 +7,6 @@
 
 [Reference](https://www.atlassian.com/git/tutorials/dotfiles)
 
-Note: This repository uses ```.config/``` instead of ```.cfg/```
-
 ### Tmux
 
 See [this](https://discuss.kakoune.com/t/macos-terminal-app-with-tmux-guide/1526) for how to 
