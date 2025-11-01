@@ -33,8 +33,8 @@ function M.setup()
     { "<leader><leader>d", "<cmd>bd<cr>", desc = "Close Current Buffer"},
     { "<leader><leader>y", '"+y', desc = "Yank To + Register"},
     { "<leader><leader>y", '"+y', desc = "Yank To + Register", mode = "v"},
-    { "<leader><leader>w", "<cmd>Fyler<cr>", desc = "Open File Manager", mode = "n"},
-    { "<leader><leader>wd", "<cmd>lua require('fyler').open({ cwd=vim.fn.expand('%:p:h') })<cr>", desc = "Open File Manager At Buffer", mode = "n"},
+    { "<leader><leader>w", function() require('mini.files').open() end, desc = "Open File Manager" },
+    { "<leader><leader>wd", function() require('mini.files').open(vim.api.nvim_buf_get_name(0), false) end, desc = "Open File Manager From Buffer" },
 
     { "<leader>f", group = "+Find" },
     -- -- FZF
