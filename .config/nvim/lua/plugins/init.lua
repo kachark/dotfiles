@@ -248,9 +248,9 @@ return require("lazy").setup({
   -- **************************
   {
     'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
     build = ':TSUpdate',
-    -- setup later in config/treesitter.lua
-    lazy = true,
+    lazy = false,
   },
   {
     'saghen/blink.cmp',
@@ -267,8 +267,6 @@ return require("lazy").setup({
     -- build = 'cargo build --release',
     -- If you use nix, you can build from source using latest nightly rust with:
     -- build = 'nix run .#build-plugin',
-
-    -- setup later in config/blink.lua
     lazy = true,
   },
 
