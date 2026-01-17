@@ -1,18 +1,22 @@
 local M = {}
 
 function M.setup()
-  --- Blink.cmp ---
   local blink = require('blink.cmp')
 
-  ---@module 'blink.cmp'
-  ---@type blink.cmp.Config
+  -- We use pcall to ensure plugins don't crash if missing
+  local has_lspkind, lspkind = pcall(require, "lspkind")
+  local has_mini_icons, mini_icons = pcall(require, "mini.icons")
+
+  -- Cache lspkind's symbol map locally if lspkind is available
+  local lspkind_map = has_lspkind and lspkind.symbol_map or {}
+
   local opts = {
     -- 'default' for mappings similar to built-in completion
     -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
     -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
     -- See the full "keymap" documentation for information on defining your own keymap.
     keymap = {
-      preset = 'enter',
+      preset = 'super-tab',
       ["<C-y>"] = { "select_and_accept" },
     },
 
@@ -39,19 +43,26 @@ function M.setup()
           components = {
             kind_icon = {
               ellipsis = false,
+
               text = function(ctx)
-                local lspkind = require("lspkind")
                 local icon = ctx.kind_icon
-                if vim.tbl_contains({ "Path" }, ctx.source_name) then
-                    local mini_icons = require("mini.icons")
+
+                -- Direct string comparison is faster than vim.tbl_contains
+                -- If the item is path related (file, folder, etc.) use mini.icons
+                if ctx.source_name == 'Path' then
+                  if has_mini_icons then
                     local dev_icon, _, _ = mini_icons.get("file", ctx.label)
-                    if dev_icon then
-                        icon = dev_icon
-                    end
+                    if dev_icon then icon = dev_icon end
+                  end
                 else
-                    icon = require("lspkind").symbolic(ctx.kind, {
-                        mode = "symbol",
-                    })
+                  -- otherwise, try lspkind (methods, functions, etc.)
+                  if lspkind_map[ctx.kind] then
+                    icon = lspkind_map[ctx.kind]
+                  elseif has_mini_icons then
+                    -- Fallback to mini.icons
+                    local mini_lsp_icon, _, _ = mini_icons.get("lsp", ctx.kind)
+                    if mini_lsp_icon then icon = mini_lsp_icon end
+                  end
                 end
 
                 return icon .. ctx.icon_gap
@@ -61,11 +72,15 @@ function M.setup()
               highlight = function(ctx)
                 local hl = "BlinkCmpKind" .. ctx.kind
                   or require("blink.cmp.completion.windows.render.tailwind").get_hl(ctx)
-                if vim.tbl_contains({ "Path" }, ctx.source_name) then
-                  local mini_icons = require("mini.icons")
+
+                if ctx.source_name == 'Path' then
                   local _, mini_hl, _ = mini_icons.get("file", ctx.label)
-                  if mini_hl then
-                    hl = mini_hl
+                  if mini_hl then hl = mini_hl end
+                else
+                  -- Fallback color if lspkind missing
+                  if not lspkind_map[ctx.kind] and has_mini_icons then
+                    local _, mini_hl, _ = mini_icons.get("lsp", ctx.kind)
+                    if mini_hl then hl = mini_hl end
                   end
                 end
                 return hl

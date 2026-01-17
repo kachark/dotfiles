@@ -259,6 +259,7 @@ return require("lazy").setup({
       'rafamadriz/friendly-snippets',
       -- optional: icons in completion menu
       'onsails/lspkind.nvim',
+      'echasnovski/mini.icons',
     },
 
     -- use a release tag to download pre-built binaries
